@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { LOCALSTORAGE_ITEM, LOGIN_ROUTE } from '../utils/constants.ts'
 import { useNavigate } from 'react-router-dom'
 import localStore from 'store'
@@ -34,9 +34,11 @@ const Home: FC = () => {
     }
 
 
-    if (isError) {
-        navigate(LOGIN_ROUTE)
-    }
+    useEffect(() => {
+        if (isError) {
+            navigate(LOGIN_ROUTE)
+        }
+    }, [isError, navigate])
 
 
     return (

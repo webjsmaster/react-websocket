@@ -8,7 +8,6 @@ const AppRouter: FC<IAppRoute> = ({ user }) => {
 
     console.log('[8] 🐬: ', user.isAuth)
 
-
     return (
         <Routes>
             {user.isAuth && authRoutes.map(({ path, Page }: IRoute) =>
