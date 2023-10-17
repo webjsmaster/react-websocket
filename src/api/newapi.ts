@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-const API_URL = 'https://localhost:8080/'
+const API_URL = 'http://localhost:8080/'
 
 export const api = createApi({
     reducerPath: 'api',
@@ -9,13 +9,23 @@ export const api = createApi({
         baseUrl: API_URL
     }),
     endpoints: (builder) => ({
-        login: builder.query({
-            query: () => 'auth/login'
+        login: builder.mutation({
+            query: (user) => ({
+                body: user,
+                url: '/auth/login',
+                method: 'POST'
+            })
         }),
         register: builder.query({
             query: () => 'auth/signup'
+        }),
+        checkIsAuth: builder.query({
+            query: (token) => ({
+                headers: { 'authorization': `Bearer ${token}` },
+                url: '/auth/profile'
+            })
         })
     })
 })
 
-export const { useLoginQuery } = api
+export const { useLoginMutation, useRegisterQuery, useCheckIsAuthQuery } = api

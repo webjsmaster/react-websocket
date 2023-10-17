@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { loginApi } from '../../api/api.ts'
 import LoaderButton from '../loaders/LoaderButton.tsx'
 import { toast } from 'react-toastify'
-import { HOME_ROUTE, LOGIN_ROUTE } from '../../utils/constants.ts'
+import { HOME_ROUTE, LOCALSTORAGE_ITEM, LOGIN_ROUTE } from '../../utils/constants.ts'
 import { changeIsAuth } from '../../store/slice/AuthSlice.ts'
 import { useAppDispatch } from '../../hooks/hooks.ts'
 
@@ -39,7 +39,7 @@ const Form: FC<IFormProps> = ({ isLogin }) => {
         setIsLoading(true)
         if (isLogin) {
             await loginApi.login(data).then(res => {
-                localStorage.setItem('react-websocket', res)
+                localStorage.setItem(LOCALSTORAGE_ITEM, JSON.stringify(res))
                 showToastSuccess('Добро пожаловать! 🤩')
                 dispatch(changeIsAuth({ isAuth: true }))
                 reset()
