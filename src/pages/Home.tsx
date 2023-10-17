@@ -1,38 +1,42 @@
-import { FC, memo, useEffect, useState } from 'react'
-import { LOCALSTORAGE_ITEM } from '../utils/constants'
-import { useCheckIsAuthQuery } from '../api/newapi'
+import { FC, useState } from 'react'
+import { LOCALSTORAGE_ITEM, LOGIN_ROUTE } from '../utils/constants.ts'
+import { useNavigate } from 'react-router-dom'
+import localStore from 'store'
+import { useCheckIsAuthQuery } from '../api/newapi.ts'
+import { toast } from 'react-toastify'
 
 const Home: FC = () => {
-    const ls = localStorage.getItem(LOCALSTORAGE_ITEM)
 
-    const [token, setToken] = useState('')
+    const navigate = useNavigate()
+    const getStoredState = () => {
+        const { accessToken } = localStore.get(LOCALSTORAGE_ITEM)
+        return accessToken
+    }
 
-
-    useEffect(() => {
-        if (ls) {
-            setToken(JSON.parse(ls).accessToken)
-        }
-    }, [])
-
-    console.log('🧨: ', token)
+    const [token] = useState(getStoredState)
 
 
-    const { isLoading, data, error, isError } = useCheckIsAuthQuery(token)
-
-    // const showToastError = (message: string) => toast.error(message, {
-    //     position: toast.POSITION.TOP_CENTER
-    // })
+    const showToastError = (message: string) => toast.error(message, {
+        position: toast.POSITION.TOP_CENTER
+    })
     //
-    // const showToastSuccess = (message: string) => toast.success(message, {
-    //     position: toast.POSITION.TOP_CENTER
-    // })
+    const showToastSuccess = (message: string) => toast.success(message, {
+        position: toast.POSITION.TOP_CENTER
+    })
+
+    const { isLoading, data, error, isError, isSuccess } = useCheckIsAuthQuery(token, {
+        skip: !token
+    })
 
 
     const handleClick = () => {
-
+        navigate(LOGIN_ROUTE)
     }
 
-    console.log('⭐: ', isLoading, data, error, isError)
+
+    if (isError) {
+        navigate(LOGIN_ROUTE)
+    }
 
 
     return (
@@ -46,4 +50,4 @@ const Home: FC = () => {
     )
 }
 
-export default memo(Home)
+export default Home

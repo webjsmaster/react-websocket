@@ -9,6 +9,7 @@ import { toast } from 'react-toastify'
 import { HOME_ROUTE, LOCALSTORAGE_ITEM, LOGIN_ROUTE } from '../../utils/constants.ts'
 import { changeIsAuth } from '../../store/slice/AuthSlice.ts'
 import { useAppDispatch } from '../../hooks/hooks.ts'
+import localStore from 'store'
 
 const Form: FC<IFormProps> = ({ isLogin }) => {
     const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -39,7 +40,7 @@ const Form: FC<IFormProps> = ({ isLogin }) => {
         setIsLoading(true)
         if (isLogin) {
             await loginApi.login(data).then(res => {
-                localStorage.setItem(LOCALSTORAGE_ITEM, JSON.stringify(res))
+                localStore.set(LOCALSTORAGE_ITEM, res)
                 showToastSuccess('Добро пожаловать! 🤩')
                 dispatch(changeIsAuth({ isAuth: true }))
                 reset()
