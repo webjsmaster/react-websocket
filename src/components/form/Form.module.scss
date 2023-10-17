@@ -1,0 +1,44 @@
+.form {
+  @apply mt-2;
+
+  .inputWrapper {
+    @apply w-full;
+    label {
+      input {
+        @apply border-inputBorderGray border-2 w-full rounded p-4 text-base mt-4 text-basicGray outline-none;
+      }
+
+      input:focus {
+        @apply border-myBlue;
+      }
+
+      .errorInput {
+        @apply border-red-400;
+      }
+    }
+
+  }
+
+  .error {
+    @apply text-xs bottom-0 left-0 text-red-500 mt-1;
+  }
+
+  .button {
+    @apply mt-8 bg-bgButton rounded h-12;
+    button {
+      @apply text-base text-white leading-5 text-center w-full h-full flex justify-center items-center;
+    }
+  }
+
+  .button:hover {
+    @apply bg-myBlue;
+  }
+
+  .button:active {
+    @apply bg-bgButton;
+    button {
+      @apply text-blue-200;
+    }
+  }
+
+}

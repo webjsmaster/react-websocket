@@ -1,0 +1,39 @@
+.wrapper {
+  @apply dark:bg-gray-600 bg-bgGray w-full h-full;
+  .content {
+    .navigation {
+      .companion {
+        .icon {
+        }
+
+        div {
+          .current {
+
+          }
+
+          .timeout {
+
+          }
+        }
+      }
+
+      .control {
+        .out-cardinal {
+
+        }
+
+        .close-btn {
+
+        }
+      }
+    }
+
+    .area {
+
+    }
+
+    .fieldMessage {
+
+    }
+  }
+}

@@ -1,0 +1,25 @@
+.wrapper {
+  @apply bg-bgGray w-full h-full flex justify-center items-center dark:bg-gray-500;
+
+  .content {
+    @apply bg-white py-12 px-4 rounded-[16px] shadow-auth w-full mx-4 relative sm:w-[440px] sm:p-12 dark:bg-gray-700;
+
+    .title {
+      @apply text-[36px] text-center dark:text-white;
+    }
+
+    .changeLink {
+      @apply absolute bottom-2 left-1/2 -translate-x-1/2 w-full text-center;
+      div {
+        @apply text-myBlue;
+        a {
+          @apply text-red-400;
+        }
+
+        a:hover {
+          @apply text-red-500;
+        }
+      }
+    }
+  }
+}
