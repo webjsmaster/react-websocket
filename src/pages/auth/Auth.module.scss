@@ -1,5 +1,5 @@
 .wrapper {
-  @apply bg-bgGray w-full h-full flex justify-center items-center dark:bg-gray-500;
+  @apply w-full h-full flex justify-center items-center;
 
   .content {
     @apply bg-white py-12 px-4 rounded-[16px] shadow-auth w-full mx-4 relative sm:w-[440px] sm:p-12 dark:bg-gray-700;

@@ -1,0 +1,14 @@
+.wrapper {
+  @apply w-full h-full flex justify-center items-center;
+}
+
+.spinner {
+  @apply w-28 h-28 relative;
+  div {
+    @apply w-full h-full border-[10px] border-transparent rounded-full absolute animate-spinnerOne border-t-themeGreen;
+  }
+
+  div:nth-of-type(2) {
+    @apply animate-spinnerTwo border-b-themeRed border-[10px] border-transparent;
+  }
+}

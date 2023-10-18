@@ -20,8 +20,10 @@ function App() {
 
     return (
         <BrowserRouter>
-            <AppRouter user={ user.user }/>
-            <ToastContainer/>
+            <div className='w-full h-full dark:bg-gray-500 bg-bgGray'>
+                <AppRouter user={ user.user }/>
+                <ToastContainer/>
+            </div>
         </BrowserRouter>
     )
 }
