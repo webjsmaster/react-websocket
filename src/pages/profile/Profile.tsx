@@ -1,4 +1,4 @@
-import { createRef, FormEvent, MutableRefObject, RefObject, useRef, useState } from 'react'
+import { createRef, FormEvent, MutableRefObject, RefObject, useEffect, useRef, useState } from 'react'
 import { Cropper, ReactCropperElement } from 'react-cropper'
 import 'cropperjs/dist/cropper.css'
 import './cropper/cropStyle.css'
@@ -7,14 +7,23 @@ import styles from './Profile.module.scss'
 import { file2Base64 } from '../../utils/fale2Base64.ts'
 import Layout from '../../components/layout/Layout.tsx'
 import { toast } from 'react-toastify'
+import { useAvatarUpdateMutation } from '../../api/newapi.ts'
+import localStore from 'store'
+import { LOCALSTORAGE_ITEM } from '../../utils/constants.ts'
+import { useAppDispatch } from '../../hooks/hooks.ts'
+import { userSlice } from '../../store/slice/UserSlice.ts'
 
 
 const Upload = () => {
-    // const [token, setToken] = useState()
+    const [token, setToken] = useState<{ accessToken: string }>()
     const [error, setError] = useState('')
     const [errorApi, setErrorApi] = useState('')
     const [successApi, setSuccessApi] = useState('')
     const [uploaded, setUploaded] = useState<string>('')
+
+    const [mutation] = useAvatarUpdateMutation()
+
+    const dispatch = useAppDispatch()
 
 
     const cropperRef: RefObject<ReactCropperElement> = createRef()
@@ -23,6 +32,10 @@ const Upload = () => {
     const showToastError = (message: string) => toast.error(message, {
         position: toast.POSITION.TOP_CENTER
     })
+
+    useEffect(() => {
+        setToken(localStore.get(LOCALSTORAGE_ITEM))
+    }, [])
 
 
     const handleClick = () => {
@@ -57,7 +70,13 @@ const Upload = () => {
         const cropper = imageElement?.cropper
         const cropperResult = cropper?.getCroppedCanvas().toDataURL() as string
         localStorage.setItem('avatar-tt', cropperResult)
-        console.log('[60] 🎯: ', cropperResult)
+        const user = await mutation({
+            id: '86aea7ec-3e8b-47f3-9c96-5ddd1c2c6145',
+            avatar: cropperResult,
+            token: token?.accessToken
+        })
+
+        dispatch(userSlice.actions.addUser({ user: user.data }))
     }
 
     const onCansel = () => {

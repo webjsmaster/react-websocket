@@ -2,16 +2,11 @@ import { FC, useState } from 'react'
 import style from './Hader.module.scss'
 import SocketApi from '../../api/socket-api.ts'
 
-// export interface Props {
-//     message: {
-//         dto: string
-//     }
-// }
-
 
 const Header: FC<{ message: string, error: string }> = ({ message, error }) => {
 
     const [text, setText] = useState<string>('')
+
 
     const handleInput = (value: string) => {
         setText(value)
@@ -21,8 +16,6 @@ const Header: FC<{ message: string, error: string }> = ({ message, error }) => {
         SocketApi.socket?.emit('server-path', text)
         setText('')
     }
-
-    console.log('[25] 🎯: ', error)
 
 
     return (

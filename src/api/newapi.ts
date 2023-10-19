@@ -25,11 +25,19 @@ export const api = createApi({
                 headers: { 'authorization': `Bearer ${token}` },
                 url: '/auth/profile'
             })
+        }),
+        avatarUpdate: builder.mutation({
+            query: (data) => ({
+                body: { avatar: data.avatar },
+                headers: { 'authorization': `Bearer ${data.token}` },
+                url: `/user/update/${data.id}`,
+                method: 'PUT'
+            })
         })
     })
 })
 
-export const { useLoginMutation, useRegisterQuery, useCheckIsAuthQuery } = api
+export const { useLoginMutation, useRegisterQuery, useCheckIsAuthQuery, useAvatarUpdateMutation } = api
 
 
 //
