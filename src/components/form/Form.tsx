@@ -22,7 +22,7 @@ const Form: FC<IFormProps> = ({ isLogin }) => {
     })
 
     const showToastSuccess = (message: string) => toast.success(message, {
-        position: toast.POSITION.TOP_CENTER
+        position: toast.POSITION.BOTTOM_CENTER
     })
 
     const {

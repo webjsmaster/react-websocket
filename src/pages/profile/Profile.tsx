@@ -12,6 +12,7 @@ import localStore from 'store'
 import { LOCALSTORAGE_ITEM } from '../../utils/constants.ts'
 import { useGetCurrentUser } from '../../hooks/useGetCurrentUser'
 import LoaderButton from '../../components/loaders/loader-button/LoaderButton'
+import cn from 'classnames'
 
 
 const Upload = () => {
@@ -21,7 +22,7 @@ const Upload = () => {
     const [successApi, setSuccessApi] = useState('')
     const [uploaded, setUploaded] = useState<string>('')
 
-    const [mutation, { isLoading }] = useAvatarUpdateMutation()
+    const [mutation, { isLoading, isSuccess }] = useAvatarUpdateMutation()
 
     // const dispatch = useAppDispatch()
 
@@ -33,6 +34,10 @@ const Upload = () => {
 
     const showToastError = (message: string) => toast.error(message, {
         position: toast.POSITION.TOP_CENTER
+    })
+
+    const showToastSuccess = (message: string) => toast.success(message, {
+        position: toast.POSITION.BOTTOM_CENTER
     })
 
     useEffect(() => {
@@ -83,6 +88,13 @@ const Upload = () => {
         setUploaded('')
     }
 
+    useEffect(() => {
+        if (isSuccess) {
+            onCansel()
+            showToastSuccess('Изменения сохранены!')
+        }
+    }, [isSuccess])
+
     return (
         <Layout>
             <div className='h-full'>
@@ -104,9 +116,16 @@ const Upload = () => {
                                 />
                             </div>
                             <div className={ styles.blockBtn }>
-                                <button className={ styles.button } onClick={ onCrop }>{isLoading ?
-                                    <LoaderButton/> : 'Сохранить'}</button>
-                                <button className={ styles.button } onClick={ onCansel }>Отменить</button>
+                                <div className={ styles.button }>
+                                    <button onClick={ onCrop } disabled={ isLoading }>
+                                        {isLoading ? <LoaderButton/> : 'Сохранить'}
+                                    </button>
+                                </div>
+                                <div className={ styles.button }>
+                                    <button onClick={ onCansel } disabled={ isLoading }>
+                                        {isLoading ? <LoaderButton/> : 'Отменить'}
+                                    </button>
+                                </div>
                             </div>
                         </>
                         :
@@ -115,16 +134,15 @@ const Upload = () => {
                                 Загрузите файл размером до 5Мб
                                 <div>По формату: JPG, PNG, GIF</div>
                             </div>
-                            <div className={ styles.button } onClick={ handleClick }>
-                                Выбрать файл
-                                <input type='file' ref={ ref } onInput={ (e) => handleFile(e) }/>
+                            <div className={ cn(styles.button, styles.inputBtn) } onClick={ handleClick }>
                                 <div className={ styles.icon }>
                                     <DownloadIcon/>
                                 </div>
+                                Выбрать файл
+                                <input type='file' ref={ ref } onInput={ (e) => handleFile(e) }/>
                             </div>
                         </>
                     }
-
 
                     {error && <div className={ styles.error }>{error}</div>}
                     {errorApi && <div className={ styles.error }>{errorApi}</div>}

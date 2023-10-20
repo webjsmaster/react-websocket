@@ -1,5 +1,14 @@
 .container {
-  @apply h-full max-w-[430px];
+  @apply h-full max-w-[430px] mx-auto;
+
+  .button {
+    @apply w-full rounded-[50px] mt-9 text-white text-[14px]
+    font-bold relative text-center cursor-pointer bg-myBlue hover:bg-bgButton transition-all h-12;
+
+    input {
+      @apply bg-amber-400 w-full h-full absolute top-0 left-0 content-none hidden;
+    }
+  }
 }
 
 .breadcrumbs {
@@ -10,22 +19,18 @@
 }
 
 .title {
-  @apply text-[26px] font-bold mt-5;
+  @apply text-[26px] font-bold mt-5 dark:text-white;
 }
 
 .subtitle {
-  @apply text-[14px] font-medium mt-9;
+  @apply text-[14px] font-medium mt-9 dark:text-white;
 }
 
-.button {
-  @apply w-full rounded-[50px] mt-9 text-white text-[14px]
-  font-bold relative py-5 text-center cursor-pointer bg-myBlue;
-  input {
-    @apply bg-amber-400 w-full h-full absolute top-0 left-0 content-none hidden;
-  }
 
+.inputBtn {
+  @apply flex items-center justify-center;
   div {
-    @apply absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-[80px]
+    @apply absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-[80px];
   }
 }
 
@@ -39,6 +44,15 @@
 
 .blockBtn {
   @apply flex flex-col items-center justify-center;
+  .button {
+    @apply w-full rounded-[50px] mt-9 text-white text-[14px]
+    font-bold relative text-center cursor-pointer bg-myBlue hover:bg-bgButton transition-all h-12;
+
+    button {
+      @apply text-base text-white leading-5 text-center w-full h-full flex justify-center items-center;
+    }
+  }
+
 }
 
 .icon {

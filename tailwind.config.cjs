@@ -32,6 +32,11 @@ module.exports = {
                 'card': '-5px 5px 10px 5px rgba(0, 0, 0, 0.3)',
                 'auth': '0px 2px 24px 0px rgba(0, 0, 0, 0.04)'
             },
+            textShadow: {
+                '3xl': '0 35px 60px -15px rgba(0, 0, 0, 0.3)',
+                'card': '-5px 5px 10px 5px rgba(0, 0, 0, 0.3)',
+                'auth': '0px 2px 24px 0px rgba(0, 0, 0, 0.04)'
+            },
             animation: {
                 spinnerOne: 'spinnerOne 1.2s linear infinite',
                 spinnerTwo: 'spinnerTwo 1.2s linear infinite'
