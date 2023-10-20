@@ -8,45 +8,12 @@ import { useAppDispatch } from '../../hooks/hooks'
 import { actions } from '../../store/slice/UserSlice'
 
 
-// interface IUserCheck {
-//     id: string
-//     login: string
-//     exp: string
-//     iat: string
-// }
-
-
 const Layout: FC<PropsWithChildren> = ({ children }) => {
 
     const navigate = useNavigate()
-    // const getStoredState = () => {
-    //     if (localStore.get(LOCALSTORAGE_ITEM)) {
-    //         const { accessToken } = localStore.get(LOCALSTORAGE_ITEM)
-    //         return accessToken
-    //     }
-    // }
-    //
-    //
-    // const [userData, setUserData] = useState<IUser>()
-    //
-    //
-    // const [token] = useState(getStoredState)
-    //
-    //
-    // const { isLoading, isError, isSuccess, data: checkUser } = useCheckIsAuthQuery(token, {
-    //     skip: !token
-    // })
-    //
-    //
-    // const { data, isLoading: loadingGetUser } = useGetUserQuery({ token, user: checkUser }, {
-    //     skip: (!isSuccess || !checkUser)
-    // })
-    //
-    // useEffect(() => {
-    //     setUserData(data)
-    // }, [data])
 
-    const { token, isSuccess, isLoading, user, isError } = useGetCurrentUser()
+
+    const { token, isLoading, user, isError } = useGetCurrentUser()
 
     const dispatch = useAppDispatch()
 
@@ -54,21 +21,18 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
         if (user) {
             dispatch(actions.addUser(user))
         }
-    }, [user])
+    }, [dispatch, user])
 
 
     useEffect(() => {
         if (isError || !token) {
             navigate(LOGIN_ROUTE)
-        } else if (isSuccess) {
-
-            console.log('[32] 🚧: ', user)
         }
-    }, [isError, navigate, isSuccess])
+    }, [isError, navigate, token])
 
     return (
         <div className='w-full h-full'>
-            <Navbar login={ user?.login }/>
+            <Navbar/>
             {isLoading ? <LoaderPage/> : children}
         </div>
     )
