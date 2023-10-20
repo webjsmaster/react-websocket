@@ -10,8 +10,8 @@ import { toast } from 'react-toastify'
 import { useAvatarUpdateMutation } from '../../api/newapi.ts'
 import localStore from 'store'
 import { LOCALSTORAGE_ITEM } from '../../utils/constants.ts'
-import { useAppDispatch } from '../../hooks/hooks.ts'
-import { userSlice } from '../../store/slice/UserSlice.ts'
+import { useGetCurrentUser } from '../../hooks/useGetCurrentUser'
+import LoaderButton from '../../components/loaders/loader-button/LoaderButton'
 
 
 const Upload = () => {
@@ -21,9 +21,11 @@ const Upload = () => {
     const [successApi, setSuccessApi] = useState('')
     const [uploaded, setUploaded] = useState<string>('')
 
-    const [mutation] = useAvatarUpdateMutation()
+    const [mutation, { isLoading }] = useAvatarUpdateMutation()
 
-    const dispatch = useAppDispatch()
+    // const dispatch = useAppDispatch()
+
+    const { user } = useGetCurrentUser()
 
 
     const cropperRef: RefObject<ReactCropperElement> = createRef()
@@ -70,13 +72,11 @@ const Upload = () => {
         const cropper = imageElement?.cropper
         const cropperResult = cropper?.getCroppedCanvas().toDataURL() as string
         localStorage.setItem('avatar-tt', cropperResult)
-        const user = await mutation({
-            id: '86aea7ec-3e8b-47f3-9c96-5ddd1c2c6145',
+        await mutation({
+            id: user?.id,
             avatar: cropperResult,
             token: token?.accessToken
         })
-
-        dispatch(userSlice.actions.addUser({ user: user.data }))
     }
 
     const onCansel = () => {
@@ -104,7 +104,8 @@ const Upload = () => {
                                 />
                             </div>
                             <div className={ styles.blockBtn }>
-                                <button className={ styles.button } onClick={ onCrop }>Сохранить</button>
+                                <button className={ styles.button } onClick={ onCrop }>{isLoading ?
+                                    <LoaderButton/> : 'Сохранить'}</button>
                                 <button className={ styles.button } onClick={ onCansel }>Отменить</button>
                             </div>
                         </>

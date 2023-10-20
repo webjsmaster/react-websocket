@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { IUserSlice } from './types.ts'
+import { IUser } from './types.ts'
 
-const initialState: IUserSlice = {
+const initialState: IUserState = {
     user: {
         id: '',
         avatar: '',
@@ -13,13 +13,20 @@ const initialState: IUserSlice = {
     }
 }
 
+interface IUserState {
+    user: IUser
+}
+
 export const userSlice = createSlice({
-    name: 'auth',
+    name: 'user',
     initialState,
     reducers: {
-        addUser: (state, { payload }: { payload: IUserSlice }) => {
-            console.log('[21] 🥕: ', payload.user)
-            state.user = payload.user
+        addUser: (state, { payload }: { payload: IUser }) => {
+            state.user = payload
         }
     }
 })
+
+export const { actions, reducer } = userSlice
+
+

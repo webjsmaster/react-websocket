@@ -1,10 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
-interface IMyColor<T> {
-    [key: string]: T
-}
 
-const constants: IMyColor<string> = {
+const constants = {
     myBlue: '#6366f1',
     bgGray: '#FAFAFC',
     bgButton: '#7675F7',
@@ -41,14 +38,14 @@ module.exports = {
             },
             keyframes: {
                 spinnerOne: {
-                    '0%': { transform: 'rotate(0deg)' },
-                    '50%': { transform: 'rotate(180deg)', borderWidth: '1px' },
-                    '100%': { transform: 'rotate(360deg)' }
+                    '0%': {transform: 'rotate(0deg)'},
+                    '50%': {transform: 'rotate(180deg)', borderWidth: '1px'},
+                    '100%': {transform: 'rotate(360deg)'}
                 },
                 spinnerTwo: {
-                    '0%': { transform: 'rotate(0deg)', borderWidth: '1px' },
-                    '50%': { transform: 'rotate(180deg)', borderWidth: '10px' },
-                    '100%': { transform: 'rotate(360deg)', borderWidth: '1px' }
+                    '0%': {transform: 'rotate(0deg)', borderWidth: '1px'},
+                    '50%': {transform: 'rotate(180deg)', borderWidth: '10px'},
+                    '100%': {transform: 'rotate(360deg)', borderWidth: '1px'}
                 }
             }
         },

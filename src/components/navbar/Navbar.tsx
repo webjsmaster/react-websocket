@@ -6,22 +6,19 @@ import { Link, useNavigate } from 'react-router-dom'
 import { LOCALSTORAGE_ITEM, LOGIN_ROUTE, MESSENGER_ROUTE, PROFILE_ROUTE } from '../../utils/constants.ts'
 import LogoutIcon from '../icons/LogoutIcon.tsx'
 import localStore from 'store'
-import { useAppSelector } from '../../hooks/hooks.ts'
+import ImageIcon from './image-icon/ImageIcon'
+import { useAppSelector } from '../../hooks/hooks'
 
 
 const Navbar: FC = () => {
-
+    const { user } = useAppSelector(state => state.user)
     const navigate = useNavigate()
-
-    const user = useAppSelector((state) => state.user)
-
 
     const handlerButton = () => {
         localStore.remove(LOCALSTORAGE_ITEM)
         navigate(LOGIN_ROUTE)
     }
 
-    console.log('[25] 🎯: ', user)
 
     return (
         <div className={ styles.wrapper }>
@@ -30,8 +27,9 @@ const Navbar: FC = () => {
                     <LogoIcons/>
                 </Link>
                 <div className='flex gap-4 items-center'>
+                    <div className='text-xl text-red-500 uppercase mr-4'>{user?.login}</div>
                     <Link to={ PROFILE_ROUTE } className={ styles.icon }>
-                        <ProfileIcon/>
+                        {user?.avatar ? <ImageIcon img={ user.avatar }/> : <ProfileIcon/>}
                     </Link>
                     <button className={ styles.logout } onClick={ handlerButton }>
                         <LogoutIcon/>

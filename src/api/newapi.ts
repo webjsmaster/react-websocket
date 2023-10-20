@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { IUser } from '../store/slice/types'
 
 
 const API_URL = 'http://localhost:8080/'
@@ -26,18 +27,26 @@ export const api = createApi({
                 url: '/auth/profile'
             })
         }),
+        getUser: builder.query<IUser, { token: string, user: { id: string } }>({
+            query: (data) => ({
+                headers: { 'authorization': `Bearer ${data.token}` },
+                url: `user/${data.user.id}`
+            }),
+            providesTags: result => ['User']
+        }),
         avatarUpdate: builder.mutation({
             query: (data) => ({
                 body: { avatar: data.avatar },
                 headers: { 'authorization': `Bearer ${data.token}` },
                 url: `/user/update/${data.id}`,
                 method: 'PUT'
-            })
+            }),
+            invalidatesTags: ['User']
         })
     })
 })
 
-export const { useLoginMutation, useRegisterQuery, useCheckIsAuthQuery, useAvatarUpdateMutation } = api
+export const { useLoginMutation, useRegisterQuery, useCheckIsAuthQuery, useAvatarUpdateMutation, useGetUserQuery } = api
 
 
 //

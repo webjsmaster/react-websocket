@@ -4,7 +4,7 @@
     @apply max-w-2xl mx-auto flex justify-between  items-center h-full;
 
     .icon {
-      @apply w-8 h-8 rounded-full bg-gray-700 flex justify-center items-center cursor-pointer;
+      @apply w-8 h-8 rounded-full bg-gray-700 flex justify-center items-center cursor-pointer overflow-hidden;
     }
 
     .link {
