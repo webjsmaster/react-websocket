@@ -2,7 +2,8 @@ import localStore from 'store'
 import { LOCALSTORAGE_ITEM } from '../utils/constants'
 import { useEffect, useState } from 'react'
 import { IUser } from '../store/slice/types'
-import { useCheckIsAuthQuery, useGetUserQuery } from '../api/newapi'
+import { useCheckIsAuthQuery } from '../api/newapi'
+import { useGetUserQuery } from '../api/users.api.ts'
 
 
 export const useGetCurrentUser = () => {
@@ -45,5 +46,5 @@ export const useGetCurrentUser = () => {
     const allSuccess = successGetUser || successCheckUser
 
 
-    return { user: userData, isLoading: allLoading, isError: allError, isSuccess: allSuccess, token }
+    return { user: userData, isLoading: allLoading, isError: allError, isSuccess: allSuccess, token, checkUser }
 }

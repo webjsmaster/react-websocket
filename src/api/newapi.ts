@@ -1,13 +1,22 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { IUser } from '../store/slice/types'
+import { BaseQueryFn, createApi, FetchArgs, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 
 const API_URL = 'http://localhost:8080/'
 
+// type CustomizedFetchBaseQueryError = {
+//     status: number
+//     errors?: { [key: string]: string }
+// }
+
+export type CustomizedFetchBaseQueryError = {
+    status?: number
+}
+
+
 export const api = createApi({
     reducerPath: 'api',
     tagTypes: ['User'],
-    baseQuery: fetchBaseQuery({
+    baseQuery: <BaseQueryFn<string | FetchArgs, unknown, CustomizedFetchBaseQueryError>>fetchBaseQuery({
         baseUrl: API_URL
     }),
     endpoints: (builder) => ({
@@ -26,24 +35,12 @@ export const api = createApi({
                 headers: { 'authorization': `Bearer ${token}` },
                 url: '/auth/profile'
             })
-        }),
-        getUser: builder.query<IUser, { token: string, user: { id: string } }>({
-            query: (data) => ({
-                headers: { 'authorization': `Bearer ${data.token}` },
-                url: `user/${data.user.id}`
-            }),
-            providesTags: () => ['User']
-        }),
-        avatarUpdate: builder.mutation({
-            query: (data) => ({
-                body: { avatar: data.avatar },
-                headers: { 'authorization': `Bearer ${data.token}` },
-                url: `/user/update/${data.id}`,
-                method: 'PUT'
-            }),
-            invalidatesTags: ['User']
         })
     })
 })
 
-export const { useLoginMutation, useRegisterQuery, useCheckIsAuthQuery, useAvatarUpdateMutation, useGetUserQuery } = api
+export const {
+    useLoginMutation,
+    useRegisterQuery,
+    useCheckIsAuthQuery
+} = api

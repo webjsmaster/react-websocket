@@ -7,12 +7,12 @@ import styles from './Profile.module.scss'
 import { file2Base64 } from '../../utils/fale2Base64.ts'
 import Layout from '../../components/layout/Layout.tsx'
 import { toast } from 'react-toastify'
-import { useAvatarUpdateMutation } from '../../api/newapi.ts'
 import localStore from 'store'
 import { LOCALSTORAGE_ITEM } from '../../utils/constants.ts'
 import { useGetCurrentUser } from '../../hooks/useGetCurrentUser'
 import LoaderButton from '../../components/loaders/loader-button/LoaderButton'
 import cn from 'classnames'
+import { useAvatarUpdateMutation } from '../../api/users.api.ts'
 
 
 const Upload = () => {
@@ -90,7 +90,7 @@ const Upload = () => {
 
     useEffect(() => {
         if (isSuccess) {
-            onCansel()
+            setUploaded('')
             showToastSuccess('Изменения сохранены!')
         }
     }, [isSuccess])

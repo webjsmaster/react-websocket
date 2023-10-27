@@ -1,15 +1,71 @@
 .wrapper {
   @apply h-16 w-full bg-bgGray dark:bg-gray-400 shadow-3xl;
   .content {
-    @apply max-w-2xl mx-auto flex justify-between  items-center h-full;
+    @apply max-w-2xl mx-auto flex justify-between items-center h-full;
+
+
+    .inputWrapper {
+      @apply w-32 h-9 relative flex items-center overflow-hidden;
+
+      .input {
+        @apply absolute w-[95%] h-8 content-none rounded pl-2 pr-8 text-basicGray font-comfortaa
+        top-1/2 -translate-y-1/2 transition-all  left-full -translate-x-0;
+      }
+
+      .input:focus {
+        @apply outline-none;
+      }
+
+      .inputActive {
+        @apply left-1/2 -translate-x-1/2 transition-all;
+      }
+    }
+
 
     .icon {
       @apply w-8 h-8 rounded-full bg-gray-700 flex justify-center items-center cursor-pointer overflow-hidden
-      hover:scale-125 transition-all;
+      hover:scale-110 transition-all;
 
       img {
         @apply hover:scale-125 transition-all;
       }
+    }
+
+    .findIcon {
+      @apply w-4 h-4 cursor-pointer rotate-0 transition-all absolute content-none top-1/2 -translate-y-1/2 left-full;
+      svg {
+        @apply w-full h-full;
+
+        path {
+          @apply fill-gray-500 transition-all;
+        }
+      }
+    }
+
+    .findIconActive {
+      @apply left-[77%];
+    }
+
+    .arrowIcon {
+      @apply w-10 h-10 cursor-pointer -rotate-90 transition-all;
+      svg {
+        @apply w-full h-full;
+
+        path {
+          @apply fill-gray-500 transition-all;
+        }
+      }
+    }
+
+    .arrowIcon:hover {
+      path {
+        @apply fill-gray-600 transition-all;
+      }
+    }
+
+
+    .arrowIconActive {
+      @apply rotate-0 transition-all;
     }
 
 

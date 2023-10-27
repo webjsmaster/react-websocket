@@ -12,3 +12,7 @@ export interface IUser {
     createdAt: number,
     updatedAt: number
 }
+
+export interface IInputValue {
+    value: string
+}

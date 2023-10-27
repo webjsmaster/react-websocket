@@ -13,7 +13,7 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
     const navigate = useNavigate()
 
 
-    const { token, isLoading, user, isError } = useGetCurrentUser()
+    const { token, isLoading, user, isError, checkUser } = useGetCurrentUser()
 
     const dispatch = useAppDispatch()
 
@@ -23,6 +23,10 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
         }
     }, [dispatch, user])
 
+    useEffect(() => {
+        console.log('[27] 🐬: ', checkUser, user)
+    }, [checkUser])
+
 
     useEffect(() => {
         if (isError || !token) {
@@ -31,7 +35,7 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
     }, [isError, navigate, token])
 
     return (
-        <div className='w-full h-full'>
+        <div className='w-full'>
             <Navbar/>
             {isLoading ? <LoaderPage/> : children}
         </div>

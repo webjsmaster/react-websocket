@@ -19,7 +19,8 @@ module.exports = {
     ],
     theme: {
         fontFamily: {
-            'roboto': ['Roboto', 'sans-serif']
+            'roboto': ['Roboto', 'sans-serif'],
+            'comfortaa': ['Comfortaa', 'sans-serif']
         },
         extend: {
             colors: {
