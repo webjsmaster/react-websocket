@@ -13,7 +13,7 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
     const navigate = useNavigate()
 
 
-    const { token, isLoading, user, isError, checkUser } = useGetCurrentUser()
+    const { token, isLoading, user, isError } = useGetCurrentUser()
 
     const dispatch = useAppDispatch()
 
@@ -23,9 +23,9 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
         }
     }, [dispatch, user])
 
-    useEffect(() => {
-        console.log('[27] 🐬: ', checkUser, user)
-    }, [checkUser])
+    // useEffect(() => {
+    //     console.log('[27] 🐬: ', checkUser, user)
+    // }, [checkUser])
 
 
     useEffect(() => {

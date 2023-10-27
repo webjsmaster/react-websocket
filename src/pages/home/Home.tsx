@@ -4,9 +4,15 @@ import { useGetFriendsQuery } from '../../api/friends.api.ts'
 import LoaderPage from '../../components/loaders/loader-page/LoaderPage.tsx'
 import { useAppSelector } from '../../hooks/hooks.ts'
 import localStore from 'store'
-import { LOCALSTORAGE_ITEM, LOGIN_ROUTE } from '../../utils/constants.ts'
+import { LOCALSTORAGE_ITEM } from '../../utils/constants.ts'
 import UserItem from '../../components/user-item/UserItem.tsx'
 import { useNavigate } from 'react-router-dom'
+
+
+interface IBaseError {
+    message: string,
+    status: string
+}
 
 const Home: FC = () => {
 
@@ -21,14 +27,27 @@ const Home: FC = () => {
         }
     }
 
-    const { data: friends, isLoading, isSuccess, error, isError } = useGetFriendsQuery({ token: getStoredState(), id: user.id }, {
+    const {
+        data: friends,
+        isLoading,
+        isSuccess,
+        error,
+        isError
+    } = useGetFriendsQuery({ token: getStoredState(), id: user.id }, {
         skip: !user.id
     })
 
+    function isFetchBaseQueryError(error: unknown): error is IBaseError {
+        return typeof error === 'object' && error != null && 'status' in error
+    }
+
 
     useEffect(() => {
-        if (isError && error.status === 403) {
-            navigate(LOGIN_ROUTE)
+        if (isError) {
+            if (isFetchBaseQueryError(error)) {
+                console.log(error)
+            }
+            // navigate(LOGIN_ROUTE)
         }
     }, [isError])
 
