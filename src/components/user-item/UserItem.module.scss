@@ -1,0 +1,92 @@
+.wrapper {
+  @apply border-2 border-themeGreen max-w-2xl mx-auto w-full mt-4 px-4 py-2
+  dark:text-bgGray rounded flex items-center justify-between;
+
+
+  .userInfo {
+    @apply flex items-center w-40 gap-5;
+
+    .title {
+      @apply font-comfortaa font-bold text-xl;
+    }
+  }
+
+  .image {
+    @apply w-8 h-8 rounded-full overflow-hidden;
+    box-shadow: 0 0 10px #000;
+
+    img {
+      @apply w-full h-full;
+    }
+  }
+
+
+  .blockIcon {
+    @apply flex w-20 justify-between items-center;
+
+    .iconSvg {
+      @apply cursor-pointer h-9 w-9;
+      svg {
+        @apply fill-white w-full h-full;
+
+        g {
+          circle {
+            @apply fill-themeRed transition-all;
+          }
+        }
+      }
+    }
+
+    .iconSvgSendMess {
+      @apply h-8 w-8 fill-white cursor-pointer;
+      svg {
+        @apply w-full h-full;
+        g {
+          path {
+            @apply fill-gray-400 transition-all border border-red-600;
+          }
+        }
+      }
+    }
+
+    .iconSvgAdd {
+      svg {
+        @apply rotate-45;
+        g {
+          circle {
+            @apply fill-green-400;
+          }
+        }
+      }
+    }
+
+    .iconSvgAdd:hover {
+      svg {
+        @apply rotate-45;
+        g {
+          circle {
+            @apply fill-green-500;
+          }
+        }
+      }
+    }
+
+    .iconSvg:hover {
+      circle {
+        @apply fill-red-600 transition-all;
+      }
+    }
+
+    .iconSvg:active {
+      svg {
+        @apply scale-110;
+      }
+    }
+
+    .iconSvgSendMess:hover {
+      path {
+        @apply fill-gray-200 transition-all;
+      }
+    }
+  }
+}
