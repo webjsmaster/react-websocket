@@ -15,7 +15,7 @@ export type CustomizedFetchBaseQueryError = {
 
 export const api = createApi({
     reducerPath: 'api',
-    tagTypes: ['User'],
+    tagTypes: ['User', 'Friends'],
     baseQuery: <BaseQueryFn<string | FetchArgs, unknown, CustomizedFetchBaseQueryError>>fetchBaseQuery({
         baseUrl: API_URL
     }),
