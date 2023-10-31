@@ -23,10 +23,6 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
         }
     }, [dispatch, user])
 
-    // useEffect(() => {
-    //     console.log('[27] 🐬: ', checkUser, user)
-    // }, [checkUser])
-
 
     useEffect(() => {
         if (isError || !token) {

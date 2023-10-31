@@ -1,0 +1,31 @@
+.wrapper {
+  @apply mt-3 flex gap-1;
+
+  button {
+    @apply border-2 border-themeGreen w-10 h-10 dark:text-white font-comfortaa font-bold bg-bgButton transition-all;
+  }
+
+  button:hover {
+    @apply bg-myBlue transition-all;
+  }
+
+  button:active {
+    @apply text-amber-500;
+  }
+
+  button:first-child {
+    @apply rounded-tl-lg rounded-bl-lg text-3xl;
+  }
+
+  button:last-child {
+    @apply rounded-tr-lg rounded-br-lg text-3xl;
+  }
+
+  button:disabled {
+    @apply dark:text-gray-600 border;
+  }
+
+  button:disabled:hover {
+    @apply bg-bgButton;
+  }
+}

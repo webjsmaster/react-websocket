@@ -1,6 +1,6 @@
 import { api } from './newapi.ts'
 import { IUser } from '../store/slice/types.ts'
-import { IUserResponse } from '../pages/home/types.ts'
+import { IGetUsersRequest, IGetUsersResponse } from '../pages/home/types.ts'
 
 export const usersApi = api.injectEndpoints({
     endpoints: (builder) => ({
@@ -12,10 +12,16 @@ export const usersApi = api.injectEndpoints({
             // providesTags: () => ['User']
         }),
 
-        findUsers: builder.query<IUserResponse[] | [], { token: string, value: string }>({
+        findUsers: builder.query<IGetUsersResponse, IGetUsersRequest>({
             query: (data) => ({
                 headers: { 'authorization': `Bearer ${data.token}` },
-                url: `/user/find?value=${data.value}`
+                url: `/user/find?value=${data.value}`,
+                params: {
+                    ...{
+                        page: data.page,
+                        take: data.take
+                    }
+                }
             })
         }),
 
