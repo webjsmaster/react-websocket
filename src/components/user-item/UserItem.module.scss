@@ -77,6 +77,12 @@
       }
     }
 
+    .iconSvg:disabled {
+      circle {
+        @apply fill-gray-500 cursor-auto;
+      }
+    }
+
     .iconSvg:active {
       svg {
         @apply scale-110;

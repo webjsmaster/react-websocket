@@ -64,10 +64,10 @@ const Users: FC = () => {
         findUsersDataQuery({ token, value, take, page: currentPage }).then(({ data }) => {
             if (data) {
                 setUsers(data.data.map(user => {
-                    const friend = friends?.every(friend => {
-                        return friend.id !== user.id
+                    const friend = friends?.find(friend => {
+                        return friend.id === user.id
                     })
-                    return { ...user, friend: !friend }
+                    return { ...user, friend: !!friend }
                 }))
                 setPaginationInfo(data.meta)
             }

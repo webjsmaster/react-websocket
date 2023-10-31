@@ -18,8 +18,8 @@ const FriendItem: FC<IPropsUserItem> = ({ user: userProps }) => {
 
     const { user, token } = useGetCurrentUser()
 
-    const [addFriend] = useCreateFriendMutation()
-    const [deleteFriend] = useDeleteFriendMutation()
+    const [addFriend, { isLoading: isLoadingAdd }] = useCreateFriendMutation()
+    const [deleteFriend, { isLoading: isLoadingDelete }] = useDeleteFriendMutation()
 
     const [userRoute] = useState<boolean>(location.pathname === USERS_ROUTE)
 
@@ -28,6 +28,8 @@ const FriendItem: FC<IPropsUserItem> = ({ user: userProps }) => {
             addFriend({ token, id: user?.id as string, friendId: id }) :
             deleteFriend({ token, id: user?.id as string, friendId: id })
     }
+
+    console.log('🌻:', isLoadingDelete, isLoadingAdd)
 
 
     return (
@@ -44,10 +46,14 @@ const FriendItem: FC<IPropsUserItem> = ({ user: userProps }) => {
                 <div className={ styles.iconSvgSendMess }>
                     <SendMessageIcon/>
                 </div>
-                <div className={ cn(styles.iconSvg, (userRoute && !friend) && styles.iconSvgAdd) }
-                    onClick={ handleButton }>
+                <button className={ cn(styles.iconSvg,
+                    (userRoute && !friend) && styles.iconSvgAdd)
+                }
+                onClick={ handleButton }
+                disabled={ isLoadingAdd || isLoadingDelete }
+                >
                     <CrossIcon/>
-                </div>
+                </button>
             </div>
         </div>
     )

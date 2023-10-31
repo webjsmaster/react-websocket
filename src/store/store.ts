@@ -11,11 +11,21 @@ const appReducers = combineReducers({
     [api.reducerPath]: api.reducer
 })
 
+const logger = (store: any) => (next: any) => (action: any) => {
+    console.group(action.type)
+    console.info('dispatching', action)
+    const result = next(action)
+    console.log('next state', store.getState()) // выводим текущее состояние в консоль
+    console.groupEnd()
+    return result
+}
+
 export const store = configureStore({
     reducer: appReducers,
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(api.middleware)
+        getDefaultMiddleware().concat(api.middleware).concat(logger)
 })
+
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
