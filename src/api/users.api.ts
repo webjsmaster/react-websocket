@@ -8,8 +8,8 @@ export const usersApi = api.injectEndpoints({
             query: (data) => ({
                 headers: { 'authorization': `Bearer ${data.token}` },
                 url: `user/${data.user.id}`
-            })
-            // providesTags: () => ['User']
+            }),
+            providesTags: () => ['User']
         }),
 
         findUsers: builder.query<IGetUsersResponse, IGetUsersRequest>({
@@ -31,8 +31,8 @@ export const usersApi = api.injectEndpoints({
                 headers: { 'authorization': `Bearer ${data.token}` },
                 url: `/user/update/${data.id}`,
                 method: 'PUT'
-            })
-            // invalidatesTags: ['User']
+            }),
+            invalidatesTags: ['User']
         })
     })
 })
