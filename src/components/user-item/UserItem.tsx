@@ -7,8 +7,8 @@ import { useLocation } from 'react-router-dom'
 import { USERS_ROUTE } from '../../utils/constants.ts'
 import cn from 'classnames'
 import { useGetCurrentUser } from '../../hooks/useGetCurrentUser.ts'
-import { useCreateFriendMutation, useDeleteFriendMutation } from '../../api/friends.api.ts'
 import { IPropsUserItem } from './types.ts'
+import { useAppActions } from '../../hooks/hooks.ts'
 
 const FriendItem: FC<IPropsUserItem> = ({ user: userProps }) => {
 
@@ -18,17 +18,26 @@ const FriendItem: FC<IPropsUserItem> = ({ user: userProps }) => {
 
     const { user, token } = useGetCurrentUser()
 
-    const [addFriend] = useCreateFriendMutation()
-    const [deleteFriend] = useDeleteFriendMutation()
-
     const [userRoute] = useState<boolean>(location.pathname === USERS_ROUTE)
+
+    const { addFriend, removeFriend } = useAppActions()
+
+
+    // const [addFriend] = useCreateFriendMutation()
+    // const [deleteFriend] = useDeleteFriendMutation()
+
+    // const handleButton = () => {
+    //     userRoute && !friend ?
+    //         addFriend({ token, id: user?.id as string, friendId: id }) :
+    //         deleteFriend({ token, id: user?.id as string, friendId: id })
+    // }
+
 
     const handleButton = () => {
         userRoute && !friend ?
             addFriend({ token, id: user?.id as string, friendId: id }) :
-            deleteFriend({ token, id: user?.id as string, friendId: id })
+            removeFriend({ token, id: user?.id as string, friendId: id })
     }
-
 
     return (
         <div className={ styles.wrapper }>

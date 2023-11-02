@@ -3,10 +3,13 @@ import { authSlice } from './slice/AuthSlice.ts'
 import { api } from '../api/newapi.ts'
 import { reducer } from './slice/UserSlice.ts'
 import { inputValueReducer } from './slice/InputValueSlice.ts'
+import { usersSlice } from './slice/UsersSlice.ts'
+
 
 const appReducers = combineReducers({
     auth: authSlice.reducer,
     user: reducer,
+    users: usersSlice.reducer,
     inputValue: inputValueReducer,
     [api.reducerPath]: api.reducer
 })

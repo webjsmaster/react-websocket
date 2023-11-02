@@ -16,7 +16,6 @@ const Form: FC<IFormProps> = ({ isLogin }) => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
 
-
     const showToastError = (message: string) => toast.error(message, {
         position: toast.POSITION.TOP_CENTER
     })
