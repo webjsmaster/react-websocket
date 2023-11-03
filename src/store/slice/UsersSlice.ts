@@ -1,6 +1,6 @@
 import { getFriends, getUsers } from '../users/users.action.ts'
 import { createSlice } from '@reduxjs/toolkit'
-import { IMetaResponse, IUserResponse } from '../../pages/home/types.ts'
+import { IMetaResponse, IUserResponse } from '../../pages/friends/types.ts'
 import { addFriend, removeFriend } from '../friends/friends.action.ts'
 
 

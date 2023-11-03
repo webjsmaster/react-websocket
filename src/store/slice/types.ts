@@ -1,5 +1,6 @@
 export interface IAuthSlice {
-    isAuth: boolean,
+    isAuth?: boolean,
+    user?: IUser
 }
 
 

@@ -1,6 +1,6 @@
 import { IRoute } from './types.ts'
-import { ADMIN_ROUTE, HOME_ROUTE, LOGIN_ROUTE, MESSENGER_ROUTE, PROFILE_ROUTE, REGISTRATION_ROUTE, USERS_ROUTE } from '../utils/constants.ts'
-import { Admin, Auth, Home, Messenger, Profile, Users } from '../pages'
+import { ADMIN_ROUTE, FRIENDS_ROUTE, LOGIN_ROUTE, MESSENGER_ROUTE, PROFILE_ROUTE, REGISTRATION_ROUTE, USERS_ROUTE } from '../utils/constants.ts'
+import { Admin, Auth, Friends, Messenger, Profile, Users } from '../pages'
 
 
 export const adminRoutes: IRoute[] = [
@@ -12,8 +12,8 @@ export const adminRoutes: IRoute[] = [
 
 export const authRoutes: IRoute[] = [
     {
-        path: HOME_ROUTE,
-        Page: Home
+        path: FRIENDS_ROUTE,
+        Page: Friends
     },
     {
         path: MESSENGER_ROUTE,

@@ -3,30 +3,25 @@ import styles from './Navbar.module.scss'
 import LogoIcons from '../icons/LogoIcons.tsx'
 import ProfileIcon from '../icons/ProfileIcon.tsx'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { HOME_ROUTE, LOCALSTORAGE_ITEM, LOGIN_ROUTE, MESSENGER_ROUTE, PROFILE_ROUTE, USERS_ROUTE } from '../../utils/constants.ts'
+import { FRIENDS_ROUTE, LOCALSTORAGE_ITEM, LOGIN_ROUTE, MESSENGER_ROUTE, PROFILE_ROUTE, USERS_ROUTE } from '../../utils/constants.ts'
 import LogoutIcon from '../icons/LogoutIcon.tsx'
 import localStore from 'store'
 import ImageIcon from './image-icon/ImageIcon'
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
+import { useAppActions, useAppSelector } from '../../hooks/hooks'
 import PeopleIcon from '../icons/PeopleIcon.tsx'
 import FindIcon from '../icons/FindIcon.tsx'
 import cn from 'classnames'
 import ArrowIcon from '../icons/ArrowIcon.tsx'
-import { actions } from '../../store/slice/InputValueSlice.ts'
-// import { useLazyFindUsersQuery } from '../../api/users.api.ts'
 
 
 const Navbar: FC = () => {
-    const { user } = useAppSelector(state => state.user)
+    const { user } = useAppSelector(state => state.auth)
     const navigate = useNavigate()
     const [isShow, setIsShow] = useState<boolean>(false)
     const [inputValue, setInputValue] = useState<string>('')
 
-    const dispatch = useAppDispatch()
-
     const { pathname } = useLocation()
-
-    // const [query, { isLoading }] = useLazyFindUsersQuery()
+    const { setValueActionCreator } = useAppActions()
 
     const handlerInput = (e: ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value)
@@ -44,11 +39,7 @@ const Navbar: FC = () => {
     }
 
     const handlerFindButton = () => {
-
-
-        console.log('[49] 🐬: ', pathname)
-        dispatch(actions.setValue({ value: inputValue }))
-
+        setValueActionCreator({ value: inputValue })
         if (pathname !== USERS_ROUTE) {
             navigate(USERS_ROUTE)
         }
@@ -58,13 +49,6 @@ const Navbar: FC = () => {
     const handlerArrowButton = () => {
         setIsShow(!isShow)
     }
-
-    // const getStoredState = () => {
-    //     if (localStore.get(LOCALSTORAGE_ITEM)) {
-    //         const { accessToken } = localStore.get(LOCALSTORAGE_ITEM)
-    //         return accessToken
-    //     }
-    // }
 
     return (
         <div className={ styles.wrapper }>
@@ -93,7 +77,7 @@ const Navbar: FC = () => {
 
                     <div className='flex gap-4 items-center'>
 
-                        <Link to={ HOME_ROUTE } className={ styles.peopleLink }>
+                        <Link to={ FRIENDS_ROUTE } className={ styles.peopleLink }>
                             <PeopleIcon theme={ 'white' }/>
                             <span className='uppercase'>Friends</span>
                         </Link>

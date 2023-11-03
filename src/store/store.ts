@@ -1,32 +1,31 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import { authSlice } from './slice/AuthSlice.ts'
-import { api } from '../api/newapi.ts'
-import { reducer } from './slice/UserSlice.ts'
-import { inputValueReducer } from './slice/InputValueSlice.ts'
+import { authSliceReducer } from './slice/AuthSlice.ts'
+import { apiAuthRtk } from '../api/api-auth.rtk.ts'
+import { valueSliceReducer } from './slice/ValueSlice.ts'
 import { usersSlice } from './slice/UsersSlice.ts'
 
 
 const appReducers = combineReducers({
-    auth: authSlice.reducer,
-    user: reducer,
+    auth: authSliceReducer,
     users: usersSlice.reducer,
-    inputValue: inputValueReducer,
-    [api.reducerPath]: api.reducer
+    value: valueSliceReducer,
+    [apiAuthRtk.reducerPath]: apiAuthRtk.reducer
 })
 
-const logger = (store: any) => (next: any) => (action: any) => {
-    console.group(action.type)
-    console.info('dispatching', action)
-    const result = next(action)
-    console.log('next state', store.getState()) // выводим текущее состояние в консоль
-    console.groupEnd()
-    return result
-}
+// const logger = (store: any) => (next: any) => (action: any) => {
+//     console.group(action.type)
+//     console.info('dispatching', action)
+//     const result = next(action)
+//     console.log('next state', store.getState()) // выводим текущее состояние в консоль
+//     console.groupEnd()
+//     return result
+// }
 
 export const store = configureStore({
     reducer: appReducers,
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(api.middleware).concat(logger)
+        getDefaultMiddleware().concat(apiAuthRtk.middleware)
+    // .concat(logger)
 })
 
 

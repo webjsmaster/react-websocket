@@ -2,8 +2,8 @@ import localStore from 'store'
 import { LOCALSTORAGE_ITEM } from '../utils/constants'
 import { useEffect, useState } from 'react'
 import { IUser } from '../store/slice/types'
-import { useCheckIsAuthQuery } from '../api/newapi'
-import { useGetUserQuery } from '../api/users.api.ts'
+import { useCheckIsAuthQuery } from '../api/api-auth.rtk.ts'
+import { useGetUserQuery } from '../api/api-user.rtk.ts'
 
 
 export const useGetCurrentUser = () => {

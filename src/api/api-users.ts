@@ -1,5 +1,5 @@
 import { instance } from './api.ts'
-import { IGetUsersRequest } from '../pages/home/types.ts'
+import { IGetUsersRequest } from '../pages/friends/types.ts'
 
 export const usersApi = {
     async findUsers(data: IGetUsersRequest) {

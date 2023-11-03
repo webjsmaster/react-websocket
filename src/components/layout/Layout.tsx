@@ -1,34 +1,28 @@
-import { FC, PropsWithChildren, useEffect } from 'react'
+import { FC, PropsWithChildren } from 'react'
 import Navbar from '../navbar/Navbar.tsx'
-import { useNavigate } from 'react-router-dom'
-import { LOGIN_ROUTE } from '../../utils/constants.ts'
 import LoaderPage from '../loaders/loader-page/LoaderPage.tsx'
 import { useGetCurrentUser } from '../../hooks/useGetCurrentUser'
-import { useAppDispatch } from '../../hooks/hooks'
-import { actions } from '../../store/slice/UserSlice'
 
 
 const Layout: FC<PropsWithChildren> = ({ children }) => {
 
-    const navigate = useNavigate()
-
-
+    // const navigate = useNavigate()
     const { token, isLoading, user, isError } = useGetCurrentUser()
-
-    const dispatch = useAppDispatch()
-
-    useEffect(() => {
-        if (user) {
-            dispatch(actions.addUser(user))
-        }
-    }, [dispatch, user])
-
-
-    useEffect(() => {
-        if (isError || !token) {
-            navigate(LOGIN_ROUTE)
-        }
-    }, [isError, navigate, token])
+    // const { loginUserActionCreator } = useAppActions()
+    //
+    // useEffect(() => {
+    //     if (user) {
+    //         loginUserActionCreator({ user })
+    //     }
+    // }, [loginUserActionCreator, user])
+    //
+    //
+    // useEffect(() => {
+    //     if (isError || !token) {
+    //         console.log('[25] 🎯: ERROR')
+    //         navigate(LOGIN_ROUTE)
+    //     }
+    // }, [isError, navigate, token])
 
     return (
         <div className='w-full'>

@@ -5,15 +5,15 @@ const initialState: IInputValue = {
     value: ''
 }
 
-export const inputValueSlice = createSlice({
+export const valueSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        setValue: (state, { payload }: { payload: IInputValue }) => {
+        setValueActionCreator: (state, { payload }: { payload: IInputValue }) => {
             state.value = payload.value
         }
     }
 })
 
 
-export const { actions, reducer: inputValueReducer } = inputValueSlice
+export const { actions: valueSliceActions, reducer: valueSliceReducer } = valueSlice

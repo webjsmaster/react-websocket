@@ -1,8 +1,7 @@
-import { api } from './newapi.ts'
 import { IUser } from '../store/slice/types.ts'
-import { IGetUsersRequest, IGetUsersResponse } from '../pages/home/types.ts'
+import { apiAuthRtk } from './api-auth.rtk.ts'
 
-export const usersApi = api.injectEndpoints({
+export const apiUserRtk = apiAuthRtk.injectEndpoints({
     endpoints: (builder) => ({
         getUser: builder.query<IUser, { token: string, user: { id: string } }>({
             query: (data) => ({
@@ -10,19 +9,6 @@ export const usersApi = api.injectEndpoints({
                 url: `user/${data.user.id}`
             }),
             providesTags: () => ['User']
-        }),
-
-        findUsers: builder.query<IGetUsersResponse, IGetUsersRequest>({
-            query: (data) => ({
-                headers: { 'authorization': `Bearer ${data.token}` },
-                url: `/user/find?value=${data.value}`,
-                params: {
-                    ...{
-                        page: data.page,
-                        take: data.take
-                    }
-                }
-            })
         }),
 
         avatarUpdate: builder.mutation({
@@ -40,7 +26,5 @@ export const usersApi = api.injectEndpoints({
 
 export const {
     useGetUserQuery,
-    useAvatarUpdateMutation,
-    useFindUsersQuery,
-    useLazyFindUsersQuery
-} = usersApi
+    useAvatarUpdateMutation
+} = apiUserRtk

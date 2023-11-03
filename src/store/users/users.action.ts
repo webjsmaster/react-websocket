@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { IGetUsersRequest } from '../../pages/home/types.ts'
+import { IGetUsersRequest } from '../../pages/friends/types.ts'
 import { usersApi } from '../../api/api-users.ts'
 
 export const getUsers = createAsyncThunk('users', async (data: IGetUsersRequest, thunkApi) => {

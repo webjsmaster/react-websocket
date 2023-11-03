@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from 'react'
 import Layout from '../../components/layout/Layout.tsx'
 import { useAppActions, useAppSelector } from '../../hooks/hooks.ts'
 import LoaderPage from '../../components/loaders/loader-page/LoaderPage.tsx'
-import { IMetaResponse, IUserResponse } from '../home/types.ts'
+import { IMetaResponse, IUserResponse } from '../friends/types.ts'
 import UserItem from '../../components/user-item/UserItem.tsx'
 import { useGetCurrentUser } from '../../hooks/useGetCurrentUser.ts'
 import Pagination from '../../components/pagination/Pagination.tsx'
@@ -10,7 +10,7 @@ import Pagination from '../../components/pagination/Pagination.tsx'
 
 const Users: FC = () => {
 
-    const { value } = useAppSelector(state => state.inputValue)
+    const { value } = useAppSelector(state => state.value)
     const [users, setUsers] = useState<IUserResponse[]>([])
     // const [user, setUser] = useState<IUser>()
     // const [currentPage, setCurrentPage] = useState<number>(1)

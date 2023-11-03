@@ -1,4 +1,4 @@
-import { IMetaResponse } from '../../pages/home/types.ts'
+import { IMetaResponse } from '../../pages/friends/types.ts'
 
 export interface IPropsPagination {
     meta: IMetaResponse

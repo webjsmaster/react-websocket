@@ -1,22 +1,20 @@
 import { BrowserRouter } from 'react-router-dom'
 import AppRouter from './router/AppRouter.tsx'
-import { useEffect, useState } from 'react'
-import { IAppRoute } from './router/types.ts'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { useAppSelector } from './hooks/hooks.ts'
+import { useGetCurrentUser } from './hooks/useGetCurrentUser.ts'
+import { useEffect, useState } from 'react'
+import { IAppRoute } from './router/types.ts'
 
 
 function App() {
 
     const [user, setUser] = useState<IAppRoute>({ user: { role: 'USER', isAuth: true } })
-    // const [count, setCount] = useState(0)=
-    // const { message, error } = useConnectionSocket()
-    const isAuth = useAppSelector((state) => state.auth.isAuth)
+    const { user: userData } = useGetCurrentUser()
 
     useEffect(() => {
-        setUser({ user: { isAuth: isAuth, role: 'USER' } })
-    }, [isAuth])
+        setUser({ user: { isAuth: true, role: 'USER' } })
+    }, [userData])
 
     return (
         <BrowserRouter>

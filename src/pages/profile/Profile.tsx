@@ -12,7 +12,7 @@ import { LOCALSTORAGE_ITEM } from '../../utils/constants.ts'
 import { useGetCurrentUser } from '../../hooks/useGetCurrentUser'
 import LoaderButton from '../../components/loaders/loader-button/LoaderButton'
 import cn from 'classnames'
-import { useAvatarUpdateMutation } from '../../api/users.api.ts'
+import { useAvatarUpdateMutation } from '../../api/api-user.rtk.ts'
 
 
 const Upload = () => {

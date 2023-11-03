@@ -6,7 +6,7 @@ import UserItem from '../../components/user-item/UserItem.tsx'
 import { useGetCurrentUser } from '../../hooks/useGetCurrentUser.ts'
 
 
-const Home: FC = () => {
+const Friends: FC = () => {
 
     const { token, user } = useGetCurrentUser()
 
@@ -41,4 +41,4 @@ const Home: FC = () => {
     )
 }
 
-export default Home
+export default Friends

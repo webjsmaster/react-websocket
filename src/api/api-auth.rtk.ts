@@ -1,34 +1,35 @@
 import { BaseQueryFn, createApi, FetchArgs, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { baseUrl } from './api.ts'
 
-
-const API_URL = 'http://localhost:8080/'
-
-// type CustomizedFetchBaseQueryError = {
-//     status: number
-//     errors?: { [key: string]: string }
-// }
 
 export type CustomizedFetchBaseQueryError = {
-    status?: number
+    data: {
+        statusCode?: number,
+        message?: string
+    },
+    status: number
 }
 
-
-export const api = createApi({
-    reducerPath: 'api',
-    tagTypes: ['User', 'Friends'],
+export const apiAuthRtk = createApi({
+    reducerPath: 'apiAuthRtk',
+    tagTypes: ['User'],
     baseQuery: <BaseQueryFn<string | FetchArgs, unknown, CustomizedFetchBaseQueryError>>fetchBaseQuery({
-        baseUrl: API_URL
+        baseUrl: baseUrl
     }),
     endpoints: (builder) => ({
         login: builder.mutation({
-            query: (user) => ({
-                body: user,
+            query: (arg) => ({
+                body: arg,
                 url: '/auth/login',
                 method: 'POST'
             })
         }),
-        register: builder.query({
-            query: () => 'auth/signup'
+        register: builder.mutation({
+            query: (arg) => ({
+                body: arg,
+                url: '/auth/signup',
+                method: 'POST'
+            })
         }),
         checkIsAuth: builder.query({
             query: (token) => ({
@@ -41,6 +42,6 @@ export const api = createApi({
 
 export const {
     useLoginMutation,
-    useRegisterQuery,
+    useRegisterMutation,
     useCheckIsAuthQuery
-} = api
+} = apiAuthRtk
