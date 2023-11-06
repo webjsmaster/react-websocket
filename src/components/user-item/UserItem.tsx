@@ -1,43 +1,43 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import styles from './UserItem.module.scss'
 import icon from './../../assets/unknown.png'
 import SendMessageIcon from '../icons/SendMessageIcon.tsx'
 import CrossIcon from '../icons/CrossIcon.tsx'
-import { useLocation } from 'react-router-dom'
-import { USERS_ROUTE } from '../../utils/constants.ts'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { MESSENGER_ROUTE, USERS_ROUTE } from '../../utils/constants.ts'
 import cn from 'classnames'
-import { useGetCurrentUser } from '../../hooks/useGetCurrentUser.ts'
 import { IPropsUserItem } from './types.ts'
-import { useAppActions } from '../../hooks/hooks.ts'
+import { useAppActions, useAppSelector } from '../../hooks/hooks.ts'
 
 const FriendItem: FC<IPropsUserItem> = ({ user: userProps }) => {
-
     const { id, avatar, friend, login } = userProps
 
+    const [current, setCurrent] = useState<string>('')
     const location = useLocation()
-
-    const { user, token } = useGetCurrentUser()
-
+    const navigate = useNavigate()
+    const { addFriend, removeFriend, setCurrentFriend } = useAppActions()
     const [userRoute] = useState<boolean>(location.pathname === USERS_ROUTE)
+    const { user } = useAppSelector(state => state.auth)
+    const { isLoading, isSuccess } = useAppSelector(state => state.friends)
 
-    const { addFriend, removeFriend } = useAppActions()
-
-
-    // const [addFriend] = useCreateFriendMutation()
-    // const [deleteFriend] = useDeleteFriendMutation()
-
-    // const handleButton = () => {
-    //     userRoute && !friend ?
-    //         addFriend({ token, id: user?.id as string, friendId: id }) :
-    //         deleteFriend({ token, id: user?.id as string, friendId: id })
-    // }
-
+    useEffect(() => {
+        if (isSuccess) {
+            setCurrent('')
+        }
+    }, [isSuccess])
 
     const handleButton = () => {
+        setCurrent(id)
         userRoute && !friend ?
-            addFriend({ token, id: user?.id as string, friendId: id }) :
-            removeFriend({ token, id: user?.id as string, friendId: id })
+            addFriend({ token: user?.accessToken as string, id: user?.id as string, friendId: id }) :
+            removeFriend({ token: user?.accessToken as string, id: user?.id as string, friendId: id })
     }
+
+    const handleMessageBtn = () => {
+        setCurrentFriend(userProps)
+        navigate(MESSENGER_ROUTE)
+    }
+
 
     return (
         <div className={ styles.wrapper }>
@@ -50,13 +50,17 @@ const FriendItem: FC<IPropsUserItem> = ({ user: userProps }) => {
                 </div>
             </div>
             <div className={ styles.blockIcon }>
-                <div className={ styles.iconSvgSendMess }>
+                <button className={ styles.iconSvgSendMess }
+                    disabled={ isLoading && current === id }
+                    onClick={ handleMessageBtn }
+                >
                     <SendMessageIcon/>
-                </div>
-                <div className={ cn(styles.iconSvg, (userRoute && !friend) && styles.iconSvgAdd) }
+                </button>
+                <button className={ cn(styles.iconSvg, (userRoute && !friend) && styles.iconSvgAdd) }
+                    disabled={ isLoading && current === id }
                     onClick={ handleButton }>
                     <CrossIcon/>
-                </div>
+                </button>
             </div>
         </div>
     )

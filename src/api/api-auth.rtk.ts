@@ -41,7 +41,5 @@ export const apiAuthRtk = createApi({
 })
 
 export const {
-    useLoginMutation,
-    useRegisterMutation,
     useCheckIsAuthQuery
 } = apiAuthRtk

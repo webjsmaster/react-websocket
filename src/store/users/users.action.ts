@@ -15,7 +15,7 @@ export const getFriends = createAsyncThunk('friends', async (data: { id: string,
     try {
         return await usersApi.getFriends(data)
     } catch (e) {
-        console.log('[9] 🥕: ERROR', e)
-        throw thunkApi.rejectWithValue({})
+        const error = e as { message: string }
+        throw thunkApi.rejectWithValue(error.message)
     }
 })

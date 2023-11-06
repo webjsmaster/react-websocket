@@ -19,7 +19,6 @@ export const usersApi = {
     },
 
     async getFriends(data: { id: string, token: string }) {
-        console.log('[22] 🌻: ', data)
         return await instance.get(`friends/${data.id}`, {
             headers: {
                 'authorization': `Bearer ${data.token}`

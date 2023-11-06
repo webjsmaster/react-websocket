@@ -3,7 +3,7 @@ import styles from './Navbar.module.scss'
 import LogoIcons from '../icons/LogoIcons.tsx'
 import ProfileIcon from '../icons/ProfileIcon.tsx'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { FRIENDS_ROUTE, LOCALSTORAGE_ITEM, LOGIN_ROUTE, MESSENGER_ROUTE, PROFILE_ROUTE, USERS_ROUTE } from '../../utils/constants.ts'
+import { FRIENDS_ROUTE, LOCALSTORAGE_ITEM, MESSENGER_ROUTE, PROFILE_ROUTE, USERS_ROUTE } from '../../utils/constants.ts'
 import LogoutIcon from '../icons/LogoutIcon.tsx'
 import localStore from 'store'
 import ImageIcon from './image-icon/ImageIcon'
@@ -21,7 +21,7 @@ const Navbar: FC = () => {
     const [inputValue, setInputValue] = useState<string>('')
 
     const { pathname } = useLocation()
-    const { setValueActionCreator } = useAppActions()
+    const { setValueActionCreator, logoutUserActionCreator } = useAppActions()
 
     const handlerInput = (e: ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value)
@@ -33,9 +33,9 @@ const Navbar: FC = () => {
         }
     }
 
-    const handlerButton = () => {
+    const handlerLogoutButton = () => {
         localStore.remove(LOCALSTORAGE_ITEM)
-        navigate(LOGIN_ROUTE)
+        logoutUserActionCreator()
     }
 
     const handlerFindButton = () => {
@@ -86,13 +86,11 @@ const Navbar: FC = () => {
                         <Link to={ PROFILE_ROUTE } className={ styles.icon }>
                             {user?.avatar ? <ImageIcon img={ user.avatar }/> : <ProfileIcon/>}
                         </Link>
-                        <button className={ styles.logout } onClick={ handlerButton }>
+                        <button className={ styles.logout } onClick={ handlerLogoutButton }>
                             <LogoutIcon/>
                         </button>
                     </div>
                 </div>
-
-
             </div>
         </div>
     )

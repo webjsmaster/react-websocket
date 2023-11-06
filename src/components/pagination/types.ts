@@ -1,7 +1,7 @@
-import { IMetaResponse } from '../../pages/friends/types.ts'
+import { IMetaResponse } from '../../store/slice/types.ts'
 
 export interface IPropsPagination {
     meta: IMetaResponse
-    isLoading: boolean
+    isLoading: boolean | undefined
     handlerChangePage: (params: number) => void
 }

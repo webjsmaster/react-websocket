@@ -4,15 +4,21 @@ import { useMemo } from 'react'
 import { bindActionCreators } from '@reduxjs/toolkit'
 import * as userActions from '../store/users/users.action.ts'
 import * as friendsActions from '../store/friends/friends.action.ts'
-import { authSliceActions } from '../store/slice/AuthSlice.ts'
+import * as authActions from '../store/auth/auth.action.ts'
 import { valueSliceActions } from '../store/slice/ValueSlice.ts'
+import { authSliceActions } from '../store/slice/AuthSlice.ts'
+import { friendsSliceActions } from '../store/slice/FriendsSlice.ts'
+import { messangerSliceActions } from '../store/slice/MessangerSlice.ts'
 
 
 const rootActions = {
+    ...authActions,
+    ...friendsSliceActions,
     ...authSliceActions,
     ...valueSliceActions,
     ...userActions,
-    ...friendsActions
+    ...friendsActions,
+    ...messangerSliceActions
 }
 
 

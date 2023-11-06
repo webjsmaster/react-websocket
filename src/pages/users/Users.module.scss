@@ -1,0 +1,11 @@
+.wrapper {
+  @apply flex flex-col justify-center items-center mx-4 mt-8;
+}
+
+.wrapperDisabled {
+  @apply blur-sm z-10;
+}
+
+.pagination {
+  @apply flex justify-center items-center;
+}

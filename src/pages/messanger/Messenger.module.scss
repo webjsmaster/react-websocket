@@ -1,6 +1,8 @@
 .wrapper {
-  @apply dark:bg-gray-600 bg-bgGray w-full h-full;
+  @apply dark:bg-gray-600 bg-bgGray w-full h-[calc(100vh-4rem)] max-w-2xl mx-auto;
   .content {
+    @apply flex flex-col h-[calc(100vh-4rem)];
+
     .navigation {
       .companion {
         .icon {
@@ -29,11 +31,55 @@
     }
 
     .area {
-
+      @apply flex flex-col flex-1 overflow-y-scroll py-10;
     }
 
-    .fieldMessage {
+    .area::-webkit-scrollbar {
+      @apply w-2 h-2;
+    }
 
+    .area::-webkit-scrollbar-thumb {
+      @apply rounded bg-myBlue;
+    }
+
+    .area::-webkit-scrollbar-track {
+      @apply bg-blue-300;
+    }
+
+
+    .footer {
+      @apply h-24 bg-blue-300 flex justify-center items-center;
+
+      .footerBlock {
+        @apply h-5/6 w-11/12 bg-amber-200 rounded-2xl flex justify-center items-center px-10 gap-3;
+
+        input {
+          @apply flex-1 text-xl px-4 py-2 outline-none border-inputBorderGray border-2 w-full rounded text-basicGray;
+        }
+
+        input:focus {
+          @apply border-myBlue;
+        }
+
+        .button {
+          @apply w-10 h-10;
+          svg {
+            @apply w-full h-full fill-green-400 transition-all;
+          }
+        }
+
+        .button:active {
+          svg {
+            @apply fill-blue-400;
+          }
+        }
+
+        button:hover {
+          svg {
+            @apply fill-green-500 transition-all;
+          }
+        }
+      }
     }
   }
 }

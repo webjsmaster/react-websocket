@@ -3,12 +3,16 @@ import { authSliceReducer } from './slice/AuthSlice.ts'
 import { apiAuthRtk } from '../api/api-auth.rtk.ts'
 import { valueSliceReducer } from './slice/ValueSlice.ts'
 import { usersSlice } from './slice/UsersSlice.ts'
+import { friendsSliceReducer } from './slice/FriendsSlice.ts'
+import { messangerSliceReducer } from './slice/MessangerSlice.ts'
 
 
 const appReducers = combineReducers({
     auth: authSliceReducer,
+    friends: friendsSliceReducer,
     users: usersSlice.reducer,
     value: valueSliceReducer,
+    messanger: messangerSliceReducer,
     [apiAuthRtk.reducerPath]: apiAuthRtk.reducer
 })
 

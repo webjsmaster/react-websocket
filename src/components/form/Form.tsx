@@ -1,58 +1,44 @@
-import { ChangeEvent, FC, useEffect, useState } from 'react'
+import { ChangeEvent, FC, useEffect } from 'react'
 import styles from './Form.module.scss'
 import { IFormData, IFormProps } from './types.ts'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import LoaderButton from '../loaders/loader-button/LoaderButton.tsx'
 import { toast } from 'react-toastify'
-import { useLoginMutation } from '../../api/api-auth.rtk.ts'
-import { isFetchBaseQueryError } from '../../api/helpers.ts'
+import { useAppActions, useAppSelector } from '../../hooks/hooks.ts'
 import localStore from 'store'
 import { FRIENDS_ROUTE, LOCALSTORAGE_ITEM } from '../../utils/constants.ts'
 
 const Form: FC<IFormProps> = ({ isLogin }) => {
     const navigate = useNavigate()
-    const [isLoading, setIsLoading] = useState<boolean>(false)
-    const [login, {
-        data: dataLogin,
-        isLoading: isLoadingLogin,
-        isError: isErrorLogin,
-        error: errorLogin,
-        isSuccess
-    }] = useLoginMutation()
+    const { login } = useAppActions()
+    const { isAuth, user, isLoading, isError: isErrorLogin, error: errorLogin } = useAppSelector(state => state.auth)
+
 
     const showToastError = (message: string) => toast.error(message, {
         position: toast.POSITION.TOP_CENTER
     })
 
-    const showToastSuccess = (message: string) => toast.success(message, {
-        position: toast.POSITION.BOTTOM_CENTER
-    })
-    
+    // const showToastSuccess = (message: string) => toast.success(message, {
+    //     position: toast.POSITION.BOTTOM_CENTER
+    // })
+
 
     useEffect(() => {
-        if (isErrorLogin && errorLogin) {
-            if (isFetchBaseQueryError(errorLogin)) {
-                const errMsg = 'error' in errorLogin ? errorLogin.error : errorLogin.data.message
-                showToastError(errMsg as string)
-            }
+        if (isErrorLogin) {
+            showToastError(errorLogin as string)
         }
     }, [isErrorLogin, errorLogin])
 
-
     useEffect(() => {
-        setIsLoading(isLoadingLogin)
-    }, [isLoadingLogin])
-
-
-    useEffect(() => {
-        if (isSuccess) {
-            localStore.set(LOCALSTORAGE_ITEM, dataLogin)
-            showToastSuccess('Добро пожаловать! 🤩')
+        if (isAuth) {
+            localStore.set(LOCALSTORAGE_ITEM, { accessToken: user?.accessToken, refreshToken: user?.refreshToken })
+            //TODO добвить экран приветствия
+            // showToastSuccess('Добро пожаловать! 🤩')
             reset()
             navigate(FRIENDS_ROUTE)
         }
-    }, [dataLogin, isSuccess])
+    }, [isAuth, user])
 
 
     const {
@@ -70,11 +56,8 @@ const Form: FC<IFormProps> = ({ isLogin }) => {
     const onSubmit: SubmitHandler<IFormData> = async (data: IFormData) => {
         if (isLogin) {
             login(data)
-            // localStore.set(LOCALSTORAGE_ITEM, res)
-            // showToastSuccess('Добро пожаловать! 🤩')
-            // reset()
-            // navigate(FRIENDS_ROUTE)
         } else {
+            //TODO registration
             // await loginApi.register(data).then(res => {
             //     showToastSuccess(`Пользователь с логином ${res.login} зарегистрирован`)
             //     reset()
@@ -83,7 +66,6 @@ const Form: FC<IFormProps> = ({ isLogin }) => {
             //     showToastError(res.message)
             // })
         }
-        // setIsLoading(false)
     }
 
     const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {

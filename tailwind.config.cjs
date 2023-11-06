@@ -40,7 +40,8 @@ module.exports = {
             },
             animation: {
                 spinnerOne: 'spinnerOne 1.2s linear infinite',
-                spinnerTwo: 'spinnerTwo 1.2s linear infinite'
+                spinnerTwo: 'spinnerTwo 1.2s linear infinite',
+                rotateIcon: 'rotateIcon 1.2s linear infinite'
             },
             keyframes: {
                 spinnerOne: {
@@ -52,6 +53,10 @@ module.exports = {
                     '0%': {transform: 'rotate(0deg)', borderWidth: '1px'},
                     '50%': {transform: 'rotate(180deg)', borderWidth: '10px'},
                     '100%': {transform: 'rotate(360deg)', borderWidth: '1px'}
+                },
+                rotateIcon: {
+                    '0%': {transform: 'rotate(0deg)'},
+                    '100%': {transform: 'rotate(360deg)'}
                 }
             }
         },

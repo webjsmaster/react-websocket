@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { IUser } from '../store/slice/types'
 import { useCheckIsAuthQuery } from '../api/api-auth.rtk.ts'
 import { useGetUserQuery } from '../api/api-user.rtk.ts'
-
+import { useAppActions } from './hooks.ts'
 
 export const useGetCurrentUser = () => {
     const getStoredState = () => {
@@ -17,6 +17,7 @@ export const useGetCurrentUser = () => {
 
     const [userData, setUserData] = useState<IUser>()
     const [token] = useState(getStoredState)
+    const { loginUserActionCreator, setIsAuthActionCreator } = useAppActions()
 
 
     const {
@@ -37,7 +38,18 @@ export const useGetCurrentUser = () => {
     })
 
     useEffect(() => {
-        setUserData(data)
+        if (data) {
+            setUserData(data)
+            loginUserActionCreator({
+                user: {
+                    id: data.id,
+                    login: data.login,
+                    avatar: data.avatar,
+                    accessToken: token
+                }
+            })
+            setIsAuthActionCreator({ isAuth: true })
+        }
     }, [data])
 
 

@@ -37,6 +37,7 @@
       }
     }
 
+
     .iconSvgSendMess {
       @apply h-8 w-8 fill-white cursor-pointer;
       svg {
@@ -62,7 +63,6 @@
 
     .iconSvgAdd:hover {
       svg {
-        @apply rotate-45;
         g {
           circle {
             @apply fill-green-500;
@@ -78,8 +78,13 @@
     }
 
     .iconSvg:disabled {
-      circle {
-        @apply fill-gray-500 cursor-auto;
+      svg {
+        @apply animate-rotateIcon;
+        g {
+          circle {
+            @apply fill-gray-600 cursor-auto;
+          }
+        }
       }
     }
 
