@@ -15,7 +15,7 @@ const FriendItem: FC<IPropsUserItem> = ({ user: userProps }) => {
     const [current, setCurrent] = useState<string>('')
     const location = useLocation()
     const navigate = useNavigate()
-    const { addFriend, removeFriend, setCurrentFriend } = useAppActions()
+    const { addFriend, removeFriend, setCurrentRecipient } = useAppActions()
     const [userRoute] = useState<boolean>(location.pathname === USERS_ROUTE)
     const { user } = useAppSelector(state => state.auth)
     const { isLoading, isSuccess } = useAppSelector(state => state.friends)
@@ -34,7 +34,7 @@ const FriendItem: FC<IPropsUserItem> = ({ user: userProps }) => {
     }
 
     const handleMessageBtn = () => {
-        setCurrentFriend(userProps)
+        setCurrentRecipient(userProps)
         navigate(MESSENGER_ROUTE)
     }
 

@@ -3,31 +3,24 @@
   .content {
     @apply flex flex-col h-[calc(100vh-4rem)];
 
-    .navigation {
-      .companion {
-        .icon {
-        }
+    .recipient {
+      @apply px-10 flex justify-between text-myBlue bg-blue-300 items-center;
 
-        div {
-          .current {
-
-          }
-
-          .timeout {
-
-          }
+      .login {
+        @apply text-3xl font-bold relative;
+        span {
+          @apply absolute content-none top-0 -right-4 w-3 h-3 bg-green-500 rounded-full;
         }
       }
 
-      .control {
-        .out-cardinal {
-
-        }
-
-        .close-btn {
-
+      .icon {
+        @apply w-14 h-14 rounded-full overflow-hidden my-2;
+        img {
+          @apply w-full h-full;
         }
       }
+
+
     }
 
     .area {

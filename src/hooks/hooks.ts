@@ -5,6 +5,7 @@ import { bindActionCreators } from '@reduxjs/toolkit'
 import * as userActions from '../store/users/users.action.ts'
 import * as friendsActions from '../store/friends/friends.action.ts'
 import * as authActions from '../store/auth/auth.action.ts'
+import * as messangerActions from '../store/messanger/messanger.action.ts'
 import { valueSliceActions } from '../store/slice/ValueSlice.ts'
 import { authSliceActions } from '../store/slice/AuthSlice.ts'
 import { friendsSliceActions } from '../store/slice/FriendsSlice.ts'
@@ -18,7 +19,8 @@ const rootActions = {
     ...valueSliceActions,
     ...userActions,
     ...friendsActions,
-    ...messangerSliceActions
+    ...messangerSliceActions,
+    ...messangerActions
 }
 
 

@@ -4,6 +4,11 @@ export interface IFriendDataRequest {
     token: string
 }
 
+export interface IGetMessagesDataRequest {
+    recipientId: string
+    token: string
+}
+
 export interface IAuthDataReqiest {
     login?: string
     email?: string

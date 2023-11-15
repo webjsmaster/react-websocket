@@ -1,14 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { IAuthSlice } from './types.ts'
 import { login } from '../auth/auth.action.ts'
-import * as console from 'console'
 
 const initialState: IAuthSlice = {
     isAuth: false,
     user: {
         id: '',
         avatar: '',
-        login: ''
+        login: '',
+        accessToken: ''
     },
     isLoading: false,
     isError: false

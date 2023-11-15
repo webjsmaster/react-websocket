@@ -14,7 +14,15 @@ export interface IUsersSlice extends IBaseSlice {
 }
 
 export interface IMessangerSlice extends IBaseSlice {
-    currentFriend: IUser,
+    currentRecipient: IUser,
+    messages: IMessageResponse[]
+    meta: IMetaResponse
+}
+
+export interface IChatDataResponse {
+    chatId: string,
+    messages: IMessageResponse[]
+    meta: IMetaResponse
 }
 
 
@@ -26,7 +34,7 @@ export interface IUser {
     avatar: string,
     createdAt?: number,
     updatedAt?: number,
-    accessToken?: string,
+    accessToken: string,
     refreshToken?: string
 }
 
@@ -49,6 +57,15 @@ export interface IErrorSlise {
     }
 }
 
+export interface IMessageResponse {
+    id: string,
+    status: 1 | 2 | 3,
+    chat_id: string,
+    content: string,
+    user_id: string,
+    createdAt: string,
+    updatedAt: string
+}
 
 export interface IUserResponse {
     id: string

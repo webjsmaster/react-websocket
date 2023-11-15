@@ -1,23 +1,37 @@
 import React, { ChangeEvent, FC, RefObject, useEffect, useRef, useState } from 'react'
 import styles from './Messenger.module.scss'
 import Layout from '../../components/layout/Layout.tsx'
+import { useAppSelector } from '../../hooks/hooks.ts'
+import SendMessageIcon from '../../components/icons/SendMessageIcon.tsx'
 import { useConnectionSocket } from '../../hooks/useConnectSocket.ts'
 import SocketApi from '../../api/socket-api.ts'
-import { useAppSelector } from '../../hooks/hooks.ts'
+import { IMessageResponse } from '../../store/slice/types.ts'
 import Message from './message/Message.tsx'
-import SendMessageIcon from '../../components/icons/SendMessageIcon.tsx'
+import { toast } from 'react-toastify'
 
 
 const Messenger: FC = () => {
     const [text, setText] = useState<string>('')
+    const [messages, setMessages] = useState<IMessageResponse[]>([])
+    const [mount, setMount] = useState<boolean>(false)
     const { user } = useAppSelector(state => state.auth)
-    const { currentFriend } = useAppSelector(state => state.messanger)
-    const { message } = useConnectionSocket()
+    const { currentRecipient } = useAppSelector(state => state.messanger)
+    // const { getMessagesUser, addMessage } = useAppActions()
+    const { connectSocket, response, error } = useConnectionSocket()
+
+    const showToastError = (message: string) => toast.error(message, {
+        position: toast.POSITION.TOP_CENTER
+    })
 
     const sendMessage = () => {
-        SocketApi.socket?.emit('server-path', { text, userId: user?.id, friendId: currentFriend.id })
+        console.log('[28] 🚧: ', response?.chatId)
+        SocketApi.socket?.emit('send-message', {
+            chatId: response?.chatId,
+            content: text
+        })
         setText('')
     }
+
 
     const handlePressKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
@@ -25,69 +39,16 @@ const Messenger: FC = () => {
         }
     }
 
-    const data = [
-        {
-            id: 1,
-            from: 'a2495f22-8048-47e5-bb37-9ff2efb89aad', //user
-            to: 'f332e2e6-e8ac-4c98-a15b-dde089c06080',
-            message: 'Hello!'
-        },
-        {
-            id: 2,
-            from: 'f332e2e6-e8ac-4c98-a15b-dde089c06080',
-            to: 'a2495f22-8048-47e5-bb37-9ff2efb89aad', //user
-            message: 'И тебе не хворать!'
-        },
-        {
-            id: 3,
-            from: 'a2495f22-8048-47e5-bb37-9ff2efb89aad', //user
-            to: 'f332e2e6-e8ac-4c98-a15b-dde089c06080',
-            message: 'Как дела?'
-        },
-        {
-            id: 4,
-            from: 'f332e2e6-e8ac-4c98-a15b-dde089c06080',
-            to: 'a2495f22-8048-47e5-bb37-9ff2efb89aad', //user
-            message: 'Все хорошо, а утебя как?'
-        },
-        {
-            id: 5,
-            from: 'a2495f22-8048-47e5-bb37-9ff2efb89aad', //user
-            to: 'f332e2e6-e8ac-4c98-a15b-dde089c06080',
-            message: 'Да все отлично купил новую тачку'
-        },
-        {
-            id: 6,
-            from: 'f332e2e6-e8ac-4c98-a15b-dde089c06080',
-            to: 'a2495f22-8048-47e5-bb37-9ff2efb89aad', //user
-            message: 'А я дом себе построил, приходи смотреть)!'
-        },
-        {
-            id: 7,
-            from: 'a2495f22-8048-47e5-bb37-9ff2efb89aad', //user
-            to: 'f332e2e6-e8ac-4c98-a15b-dde089c06080',
-            message: 'Как дела?'
-        },
-        {
-            id: 8,
-            from: 'f332e2e6-e8ac-4c98-a15b-dde089c06080',
-            to: 'a2495f22-8048-47e5-bb37-9ff2efb89aad', //user
-            message: 'Все хорошо, а утебя как?'
-        },
-        {
-            id: 9,
-            from: 'a2495f22-8048-47e5-bb37-9ff2efb89aad', //user
-            to: 'f332e2e6-e8ac-4c98-a15b-dde089c06080',
-            message: 'Да все отлично купил новую тачку'
-        },
-        {
-            id: 10,
-            from: 'f332e2e6-e8ac-4c98-a15b-dde089c06080',
-            to: 'a2495f22-8048-47e5-bb37-9ff2efb89aad', //user
-            message: 'А я дом себе построил, приходи смотреть)!'
-        }
-    ]
+    useEffect(() => {
+        setMount(true)
+    }, [])
 
+
+    useEffect(() => {
+        if (mount && user && currentRecipient) {
+            connectSocket({ id: user.id, recipientId: currentRecipient.id, token: user.accessToken })
+        }
+    }, [mount])
 
     const messagesRef: RefObject<HTMLElement> = useRef(null)
 
@@ -97,18 +58,40 @@ const Messenger: FC = () => {
             const el: HTMLElement = messagesRef.current
             el.scrollTop = el.scrollHeight
         }
-    }, [data])
+    }, [messages])
+
+    useEffect(() => {
+        if (response?.messages) {
+            setMessages(response.messages)
+        }
+    }, [messages, response])
+
+
+    useEffect(() => {
+        if (error) {
+            showToastError(error)
+        }
+    }, [error])
+
 
     return (
         <Layout>
             <div className={ styles.wrapper }>
                 <div className={ styles.content }>
-                    <nav className={ styles.navigation }>
-                        {message}
-                    </nav>
+                    <header className={ styles.recipient }>
+                        <div className={ styles.login }>
+                            {currentRecipient.login}
+                            <span></span>
+                        </div>
+                        <div className={ styles.icon }>
+                            {currentRecipient.avatar && <img src={ currentRecipient.avatar } alt="icon"/>}
+                        </div>
+                    </header>
                     <main className={ styles.area } ref={ messagesRef }>
-                        {data.map((d) =>
-                            <Message key={ d.id } message={ d.message } isMy={ d.from === user?.id }/>
+                        {messages.map((message) =>
+                            <Message
+                                key={ message.id } message={ message.content } isMy={ message.user_id === user?.id }
+                            />
                         )}
                     </main>
                     <footer className={ styles.footer }>
