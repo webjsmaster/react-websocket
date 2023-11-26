@@ -5,12 +5,11 @@ import { bindActionCreators } from '@reduxjs/toolkit'
 import * as userActions from '../store/users/users.action.ts'
 import * as friendsActions from '../store/friends/friends.action.ts'
 import * as authActions from '../store/auth/auth.action.ts'
-import * as messangerActions from '../store/messanger/messanger.action.ts'
+import * as messengerActions from '../store/messenger/messenger.action.ts'
 import { valueSliceActions } from '../store/slice/ValueSlice.ts'
 import { authSliceActions } from '../store/slice/AuthSlice.ts'
 import { friendsSliceActions } from '../store/slice/FriendsSlice.ts'
-import { messangerSliceActions } from '../store/slice/MessangerSlice.ts'
-
+import { messengerSliceActions } from '../store/slice/MessengerSlice.ts'
 
 const rootActions = {
     ...authActions,
@@ -19,18 +18,15 @@ const rootActions = {
     ...valueSliceActions,
     ...userActions,
     ...friendsActions,
-    ...messangerSliceActions,
-    ...messangerActions
+    ...messengerSliceActions,
+    ...messengerActions
 }
-
 
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 
 export const useAppDispatch = useDispatch<AppDispatch>
 
-
 export const useAppActions = () => {
     const dispatch = useAppDispatch()
     return useMemo(() => bindActionCreators(rootActions, dispatch), [dispatch])
 }
-

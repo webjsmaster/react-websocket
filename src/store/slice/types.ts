@@ -13,7 +13,7 @@ export interface IUsersSlice extends IBaseSlice {
     meta: IMetaResponse
 }
 
-export interface IMessangerSlice extends IBaseSlice {
+export interface IMessengerSlice extends IBaseSlice {
     currentRecipient: IUser,
     messages: IMessageResponse[]
     meta: IMetaResponse
@@ -54,7 +54,7 @@ export interface IBaseSlice {
     isSuccess?: boolean
 }
 
-export interface IErrorSlise {
+export interface IErrorSlice {
     response: {
         data: {
             message: string
