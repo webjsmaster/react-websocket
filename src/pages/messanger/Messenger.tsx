@@ -84,7 +84,6 @@ const Messenger: FC = () => {
 
 
     useEffect(() => {
-        console.log('[89] 🥕: ', statusWriteMessage)
     }, [statusWriteMessage.status])
 
     return (
