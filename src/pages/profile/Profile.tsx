@@ -6,13 +6,13 @@ import DownloadIcon from '../../components/icons/DownloadIcon.tsx'
 import styles from './Profile.module.scss'
 import { file2Base64 } from '../../utils/fale2Base64.ts'
 import Layout from '../../components/layout/Layout.tsx'
-import { toast } from 'react-toastify'
 import localStore from 'store'
 import { LOCALSTORAGE_ITEM } from '../../utils/constants.ts'
 import { useGetCurrentUser } from '../../hooks/useGetCurrentUser'
 import LoaderButton from '../../components/loaders/loader-button/LoaderButton'
 import cn from 'classnames'
 import { useAvatarUpdateMutation } from '../../api/api-user.rtk.ts'
+import { useToasts } from '../../hooks/useToasts.ts'
 
 
 const Upload = () => {
@@ -21,26 +21,17 @@ const Upload = () => {
     const [errorApi, setErrorApi] = useState('')
     const [successApi, setSuccessApi] = useState('')
     const [uploaded, setUploaded] = useState<string>('')
-
     const [mutation, { isLoading, isSuccess }] = useAvatarUpdateMutation()
-
-    // const dispatch = useAppDispatch()
+    const { showToastSuccess, showToastError } = useToasts()
 
     const { user } = useGetCurrentUser()
-
 
     const cropperRef: RefObject<ReactCropperElement> = createRef()
     const ref: MutableRefObject<HTMLInputElement | null> = useRef(null)
 
-    const showToastError = (message: string) => toast.error(message, {
-        position: toast.POSITION.TOP_CENTER
-    })
-
-    const showToastSuccess = (message: string) => toast.success(message, {
-        position: toast.POSITION.BOTTOM_CENTER
-    })
 
     useEffect(() => {
+        console.log('[34] 🐬: PROFILE')
         setToken(localStore.get(LOCALSTORAGE_ITEM))
     }, [])
 

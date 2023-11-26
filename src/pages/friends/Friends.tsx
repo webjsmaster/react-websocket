@@ -1,21 +1,17 @@
 import { FC, useEffect } from 'react'
 import Layout from '../../components/layout/Layout.tsx'
-import LoaderPage from '../../components/loaders/loader-page/LoaderPage.tsx'
 import { useAppActions, useAppSelector } from '../../hooks/hooks.ts'
+import LoaderPage from '../../components/loaders/loader-page/LoaderPage.tsx'
 import UserItem from '../../components/user-item/UserItem.tsx'
-import { toast } from 'react-toastify'
+import { useToasts } from '../../hooks/useToasts.ts'
 
 
 const Friends: FC = () => {
     const { user, isAuth } = useAppSelector(state => state.auth)
     const { isLoading, friends, isSuccess, error, isError } = useAppSelector(state => state.friends)
-    // const [friends, setFriends] = useState<IUserResponse>()
-
     const { getFriends } = useAppActions()
+    const { showToastError, showToastWarning } = useToasts()
 
-    const showToastError = (message: string) => toast.error(message, {
-        position: toast.POSITION.TOP_CENTER
-    })
 
     useEffect(() => {
         if (user && isAuth) {
@@ -31,6 +27,12 @@ const Friends: FC = () => {
             showToastError(error as string)
         }
     }, [isError])
+
+    useEffect(() => {
+        if (isSuccess && !friends.length) {
+            showToastWarning('У вас пока нет друзей')
+        }
+    }, [isSuccess])
 
     return (
         <Layout>

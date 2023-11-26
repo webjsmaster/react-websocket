@@ -3,7 +3,7 @@ import styles from './Navbar.module.scss'
 import LogoIcons from '../icons/LogoIcons.tsx'
 import ProfileIcon from '../icons/ProfileIcon.tsx'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { FRIENDS_ROUTE, LOCALSTORAGE_ITEM, MESSENGER_ROUTE, PROFILE_ROUTE, USERS_ROUTE } from '../../utils/constants.ts'
+import { ADMIN_ROUTE, FRIENDS_ROUTE, LOCALSTORAGE_ITEM, PROFILE_ROUTE, USERS_ROUTE } from '../../utils/constants.ts'
 import LogoutIcon from '../icons/LogoutIcon.tsx'
 import localStore from 'store'
 import ImageIcon from './image-icon/ImageIcon'
@@ -53,7 +53,7 @@ const Navbar: FC = () => {
     return (
         <div className={ styles.wrapper }>
             <div className={ styles.content }>
-                <Link to={ MESSENGER_ROUTE } className={ styles.link }>
+                <Link to={ ADMIN_ROUTE } className={ styles.link }>
                     <LogoIcons/>
                 </Link>
 

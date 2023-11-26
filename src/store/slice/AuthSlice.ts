@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { IAuthSlice } from './types.ts'
-import { login } from '../auth/auth.action.ts'
+import { login, register } from '../auth/auth.action.ts'
 
 const initialState: IAuthSlice = {
     isAuth: false,
@@ -11,7 +11,8 @@ const initialState: IAuthSlice = {
         accessToken: ''
     },
     isLoading: false,
-    isError: false
+    isError: false,
+    isSuccess: false
 }
 
 export const authSlice = createSlice({
@@ -35,10 +36,21 @@ export const authSlice = createSlice({
             state.isError = false
             state.user = action.payload
         }).addCase(login.rejected, (state, action) => {
-            console.log('[37] 🐬: AUTH SLICE ERROR', action.payload)
             state.isLoading = false
             state.isError = true
             state.isAuth = false
+            state.user = initialState.user
+            state.error = action.payload as string
+        }).addCase(register.pending, state => {
+            state.isLoading = true
+            state.isError = false
+            state.isSuccess = false
+        }).addCase(register.fulfilled, (state) => {
+            state.isLoading = false
+            state.isSuccess = true
+        }).addCase(register.rejected, (state, action) => {
+            state.isLoading = false
+            state.isError = true
             state.user = initialState.user
             state.error = action.payload as string
         })

@@ -1,11 +1,11 @@
 import { FC, useEffect } from 'react'
-import { IRoute } from './types.ts'
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
-import { authRoutes, publicRoutes } from './routes.ts'
+import { FRIENDS_ROUTE } from '../utils/constants.ts'
 import { useAppSelector } from '../hooks/hooks.ts'
 import { useGetCurrentUser } from '../hooks/useGetCurrentUser.ts'
 import LoaderPage from '../components/loaders/loader-page/LoaderPage.tsx'
-import { FRIENDS_ROUTE } from '../utils/constants.ts'
+import { authRoutes, publicRoutes } from './routes.ts'
+import { IRoute } from './types.ts'
 
 
 const AppRouter: FC = () => {
@@ -20,6 +20,7 @@ const AppRouter: FC = () => {
         }
     }, [isAuth])
 
+
     return (
         <>
             {isLoading ? <LoaderPage/> :
@@ -33,6 +34,8 @@ const AppRouter: FC = () => {
                     <Route path="*" element={ <Navigate to="/login"/> }></Route>
                 </Routes>
             }
+
+
         </>
 
     )

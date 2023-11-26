@@ -1,11 +1,16 @@
-import { FC } from 'react'
+import { FC, memo, useEffect } from 'react'
 
 const Admin: FC = () => {
+
+    useEffect(() => {
+        console.log('[6] 🍄: ADMIN PAGE')
+    }, [])
+
     return (
-        <div>
+        <>
             Admin PAge
-        </div>
+        </>
     )
 }
 
-export default Admin
+export default memo(Admin)

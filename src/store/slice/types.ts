@@ -25,6 +25,11 @@ export interface IChatDataResponse {
     meta: IMetaResponse
 }
 
+export interface IChatDataWriteMessageResponse {
+    userId: string,
+    status: boolean
+}
+
 
 export interface IUser {
     id: string,
@@ -63,8 +68,8 @@ export interface IMessageResponse {
     chat_id: string,
     content: string,
     user_id: string,
-    createdAt: string,
-    updatedAt: string
+    createdAt: number,
+    updatedAt: number
 }
 
 export interface IUserResponse {

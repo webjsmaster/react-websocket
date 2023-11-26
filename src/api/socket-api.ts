@@ -14,9 +14,9 @@ export default class SocketApi {
         //     console.log('[CONNECT] 🚀')
         // })
         //
-        // this.socket.on('disconnect', (e) => {
-        //     console.log('[DISCONNECT] 🚀', e)
-        // })
+        this.socket.on('disconnect', (e) => {
+            console.log('[DISCONNECT] 🚀', e)
+        })
         //
         // this.socket.on('connect_error', (e) => {
         //     console.log('[ERROR CONNECT] 🚀', e)

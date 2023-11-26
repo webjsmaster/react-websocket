@@ -3,9 +3,9 @@
 }
 
 .message {
-  @apply w-1/2 p-4 bg-blue-300 ml-auto mr-10 mt-5 rounded;
+  @apply w-1/2 p-4 bg-blue-300 ml-auto mr-10 mt-5 rounded-[15px] rounded-bl-none;
 }
 
 .messageIsMy {
-  @apply bg-amber-200 mr-auto ml-10;
+  @apply bg-amber-200 mr-auto ml-10 rounded-br-none rounded-bl-[15px];
 }

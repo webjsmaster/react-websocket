@@ -19,6 +19,7 @@ export const register = createAsyncThunk('register',
         try {
             return await apiAuth.register(data)
         } catch (e) {
-            return thunkApi.rejectWithValue({})
+            const error = e as IErrorSlise
+            throw thunkApi.rejectWithValue(error.response.data.message)
         }
     })

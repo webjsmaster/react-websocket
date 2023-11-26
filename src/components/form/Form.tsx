@@ -4,24 +4,16 @@ import { IFormData, IFormProps } from './types.ts'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import LoaderButton from '../loaders/loader-button/LoaderButton.tsx'
-import { toast } from 'react-toastify'
 import { useAppActions, useAppSelector } from '../../hooks/hooks.ts'
 import localStore from 'store'
-import { FRIENDS_ROUTE, LOCALSTORAGE_ITEM } from '../../utils/constants.ts'
+import { FRIENDS_ROUTE, LOCALSTORAGE_ITEM, LOGIN_ROUTE } from '../../utils/constants.ts'
+import { useToasts } from '../../hooks/useToasts.ts'
 
 const Form: FC<IFormProps> = ({ isLogin }) => {
     const navigate = useNavigate()
-    const { login } = useAppActions()
-    const { isAuth, user, isLoading, isError: isErrorLogin, error: errorLogin } = useAppSelector(state => state.auth)
-
-
-    const showToastError = (message: string) => toast.error(message, {
-        position: toast.POSITION.TOP_CENTER
-    })
-
-    // const showToastSuccess = (message: string) => toast.success(message, {
-    //     position: toast.POSITION.BOTTOM_CENTER
-    // })
+    const { login, register: registration } = useAppActions()
+    const { isAuth, user, isLoading, isError: isErrorLogin, error: errorLogin, isSuccess } = useAppSelector(state => state.auth)
+    const { showToastSuccess, showToastError } = useToasts()
 
 
     useEffect(() => {
@@ -33,12 +25,20 @@ const Form: FC<IFormProps> = ({ isLogin }) => {
     useEffect(() => {
         if (isAuth) {
             localStore.set(LOCALSTORAGE_ITEM, { accessToken: user?.accessToken, refreshToken: user?.refreshToken })
-            //TODO добвить экран приветствия
-            // showToastSuccess('Добро пожаловать! 🤩')
+            showToastSuccess('Добро пожаловать! 🤩')
             reset()
             navigate(FRIENDS_ROUTE)
         }
     }, [isAuth, user])
+
+    useEffect(() => {
+        if (isSuccess) {
+            showToastSuccess('Пользователь зарегестрирован, ' +
+                'для дальнейшего использоввания сервиса, Вам необходимо войти в систему!')
+            reset()
+            navigate(LOGIN_ROUTE)
+        }
+    }, [isSuccess])
 
 
     const {
@@ -57,14 +57,7 @@ const Form: FC<IFormProps> = ({ isLogin }) => {
         if (isLogin) {
             login(data)
         } else {
-            //TODO registration
-            // await loginApi.register(data).then(res => {
-            //     showToastSuccess(`Пользователь с логином ${res.login} зарегистрирован`)
-            //     reset()
-            //     navigate(LOGIN_ROUTE)
-            // }).catch(res => {
-            //     showToastError(res.message)
-            // })
+            registration(data)
         }
     }
 

@@ -39,6 +39,10 @@
       @apply bg-blue-300;
     }
 
+    .writing {
+      @apply w-32 p-4 bg-blue-400 ml-auto mr-10 mt-5 rounded-[10px];
+    }
+
 
     .footer {
       @apply h-24 bg-blue-300 flex justify-center items-center;
