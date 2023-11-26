@@ -1,4 +1,4 @@
-import {toast} from "react-toastify";
+import { toast } from 'react-toastify'
 
 
 export const useToasts = () => {
@@ -15,5 +15,5 @@ export const useToasts = () => {
         position: toast.POSITION.TOP_CENTER
     })
 
-    return {showToastSuccess, showToastInfo, showToastWarning, showToastError}
+    return { showToastSuccess, showToastInfo, showToastWarning, showToastError }
 }
